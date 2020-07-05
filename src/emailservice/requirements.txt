@@ -33,6 +33,6 @@ six==1.12.0               # via google-api-core, google-api-python-client, googl
 uritemplate==3.0.0        # via google-api-python-client
 urllib3==1.24.2           # via requests
 opentelemetry-api         # via request
-opentelemetry-sdk=0.10b0  # via request
-opentelemetry-ext-jaeger=0.10b0  # via request
-opentelemetry-ext-grpc=0.10b0   # via request
+opentelemetry-sdk==0.10b0  # via request
+opentelemetry-ext-jaeger==0.10b0  # via request
+opentelemetry-ext-grpc==0.10b0   # via request
