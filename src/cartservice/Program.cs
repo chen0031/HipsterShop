@@ -21,6 +21,15 @@ using cartservice.interfaces;
 using CommandLine;
 using Grpc.Core;
 using Microsoft.Extensions.Configuration;
+using OpenTracing.Contrib.Grpc.Interceptors;
+using OpenTracing.Util;
+using Jaeger;
+using Jaeger.Samplers;
+using Jaeger.Reporters;
+using Microsoft.Extensions.Logging;
+using OpenTracing;
+using OpenTracing.Contrib.NetCore.CoreFx;
+using OpenTracing.Util;
 
 namespace cartservice
 {
@@ -29,6 +38,7 @@ namespace cartservice
         const string CART_SERVICE_ADDRESS = "LISTEN_ADDR";
         const string REDIS_ADDRESS = "REDIS_ADDR";
         const string CART_SERVICE_PORT = "PORT";
+        const string JAEGER_SERVICE_ADDR = "JAEGER_SERVICE_ADDR";
 
         [Verb("start", HelpText = "Starts the server listening on provided port")]
         class ServerOptions
@@ -53,16 +63,19 @@ namespace cartservice
                 {
                     await cartStore.InitializeAsync();
 
+                    // setup grpc interceptor
+                    var tracingInterceptor = new ServerTracingInterceptor(GlobalTracer.Instance);
+
                     Console.WriteLine($"Trying to start a grpc server at  {host}:{port}");
                     Server server = new Server
                     {
                         Services =
                         {
-                            // Cart Service Endpoint
-                             Hipstershop.CartService.BindService(new CartServiceImpl(cartStore)),
+                             // Cart Service Endpoint
+                              Hipstershop.CartService.BindService(new CartServiceImpl(cartStore)).Intercept(tracingInterceptor),
 
-                             // Health Endpoint
-                             Grpc.Health.V1.Health.BindService(new HealthImpl(cartStore))
+                              // Health Endpoint
+                              Grpc.Health.V1.Health.BindService(new HealthImpl(cartStore)).Intercept(tracingInterceptor),
                         },
                         Ports = { new ServerPort(host, port, ServerCredentials.Insecure) }
                     };
@@ -132,6 +145,21 @@ namespace cartservice
                                     port = int.Parse(portStr);
                                 }
                             }
+
+                            string serviceName = "cartservice";
+                            string JAEGER_SERVICE_ADDR = Environment.GetEnvironmentVariable(JAEGER_SERVICE_ADDR);
+                            ILoggerFactory loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+                            Configuration.SenderConfiguration senderConfiguration = new Configuration.SenderConfiguration(loggerFactory)
+                                             .WithEndpoint("JAEGER_SERVICE_ADDR");
+
+                            // This will log to a default localhost installation of Jaeger.
+                            var tracer = new Tracer.Builder(serviceName)
+                                      .WithSampler(new ConstSampler(true))
+                                      .WithReporter(new RemoteReporter.Builder().WithSender(senderConfiguration.GetSender()).Build())
+                                      .Build();
+
+                            // Allows code that can't use DI to also access the tracer.
+                            GlobalTracer.Register(tracer);
 
                             // Set redis cache host (hostname+port)
                             ICartStore cartStore;
