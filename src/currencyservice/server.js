@@ -13,6 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+const VERSION = require('./package.json').version;
+
+require('@google-cloud/profiler').start({
+  serviceContext: {
+    service: 'currencyservice',
+    version: '1.0.0'
+  }
+});
+require('@google-cloud/trace-agent').start();
+require('@google-cloud/debug-agent').start({
+  serviceContext: {
+    service: 'currencyservice',
+    version: VERSION
+  }
+});
 
 
 //Add tracing code
@@ -35,44 +50,9 @@ var options = {
     'currencyservice': '0.2.0',
   },
 };
-var tracer = initTracer(config, options);
+const tracer = initTracer(config, options);
 const opentracing = require('opentracing');
 opentracing.initGlobalTracer(tracer);
-
-if(process.env.DISABLE_PROFILER) {
-  console.log("Profiler disabled.")
-}
-else {
-  console.log("Profiler enabled.")
-  require('@google-cloud/profiler').start({
-    serviceContext: {
-      service: 'currencyservice',
-      version: '1.0.0'
-    }
-  });
-}
-
-
-if(process.env.DISABLE_TRACING) {
-  console.log("Tracing disabled.")
-}
-else {
-  console.log("Tracing enabled.")
-  require('@google-cloud/trace-agent').start();
-}
-
-if(process.env.DISABLE_DEBUGGER) {
-  console.log("Debugger disabled.")
-}
-else {
-  console.log("Debugger enabled.")
-  require('@google-cloud/debug-agent').start({
-    serviceContext: {
-      service: 'currencyservice',
-      version: 'VERSION'
-    }
-  });
-}
 
 const path = require('path');
 const grpc = require('grpc');

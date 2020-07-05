@@ -20,6 +20,7 @@ using cartservice.cartstore;
 using cartservice.interfaces;
 using CommandLine;
 using Grpc.Core;
+using Grpc.Core.Interceptors;
 using Microsoft.Extensions.Configuration;
 using OpenTracing.Contrib.Grpc.Interceptors;
 using OpenTracing.Util;
@@ -29,7 +30,7 @@ using Jaeger.Reporters;
 using Microsoft.Extensions.Logging;
 using OpenTracing;
 using OpenTracing.Contrib.NetCore.CoreFx;
-using OpenTracing.Util;
+
 
 namespace cartservice
 {
@@ -148,8 +149,8 @@ namespace cartservice
 
                             string serviceName = "cartservice";
                             string pre = "http://";
-                            string JAEGER_SERVICE_ADDR = Environment.GetEnvironmentVariable(JAEGER_SERVICE_ADDR);
-                            string JAEGER_ADDR = pre + JAEGER_SERVICE_ADDR;
+                            string suf = Environment.GetEnvironmentVariable(JAEGER_SERVICE_ADDR);
+                            string JAEGER_ADDR = pre + suf;
                             ILoggerFactory loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
                             Configuration.SenderConfiguration senderConfiguration = new Configuration.SenderConfiguration(loggerFactory)
                                              .WithEndpoint("JAEGER_ADDR");

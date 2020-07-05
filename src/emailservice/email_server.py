@@ -190,7 +190,7 @@ if __name__ == '__main__':
          service_name='emailservice',
          # optional: configure also collector
          collector_host_name=os.environ.get('JAEGER_HOST'),
-         collector_port=os.environ.get('JAEGER_PORT'),,
+         collector_port=os.environ.get('JAEGER_PORT'),
          collector_endpoint='/api/traces?format=jaeger.thrift',
          # username=xxxx, # optional
          # password=xxxx, # optional
