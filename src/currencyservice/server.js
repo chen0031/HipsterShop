@@ -14,6 +14,31 @@
  * limitations under the License.
  */
 
+
+//Add tracing code
+var initTracer = require('jaeger-client').initTracer;
+
+// See schema https://github.com/jaegertracing/jaeger-client-node/blob/master/src/configuration.js#L37
+var config = {
+  serviceName: 'currencyservice',
+  reporter: {
+    // Provide the traces endpoint; this forces the client to connect directly to the Collector and send
+    // spans over HTTP
+    collectorEndpoint: process.env.JAEGER_SERVICE_ADDR,
+    // Provide username and password if authentication is enabled in the Collector
+    // username: '',
+    // password: '',
+  },
+};
+var options = {
+  tags: {
+    'currencyservice': '0.2.0',
+  },
+};
+var tracer = initTracer(config, options);
+const opentracing = require('opentracing');
+opentracing.initGlobalTracer(tracer);
+
 if(process.env.DISABLE_PROFILER) {
   console.log("Profiler disabled.")
 }
