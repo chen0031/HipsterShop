@@ -298,7 +298,7 @@ public final class AdService {
   private static void initJaeger() {
     String jaegerAddr = System.getenv("JAEGER_SERVICE_ADDR");
     if (jaegerAddr != null && !jaegerAddr.isEmpty()) {
-      String jaegerUrl = String.format("http://%s/api/traces", jaegerAddr);
+      String jaegerUrl = String.format("http://%s", jaegerAddr);
       // Register Jaeger Tracing.
       JaegerTraceExporter.createAndRegister(
           JaegerExporterConfiguration.builder()
