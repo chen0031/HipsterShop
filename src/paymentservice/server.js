@@ -12,6 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+//Add tracing code
+var initTracer = require('jaeger-client').initTracer;
+
+// See schema https://github.com/jaegertracing/jaeger-client-node/blob/master/src/configuration.js#L37
+var config = {
+  serviceName: 'paymentservice',
+  reporter: {
+    // Provide the traces endpoint; this forces the client to connect directly to the Collector and send
+    // spans over HTTP
+    collectorEndpoint: process.env.JAEGER_SERVICE_ADDR,
+    // Provide username and password if authentication is enabled in the Collector
+    // username: '',
+    // password: '',
+  },
+};
+var options = {
+  tags: {
+    'paymentservice': '0.2.0',
+  },
+};
+var tracer = initTracer(config, options);
+const opentracing = require('opentracing');
+opentracing.initGlobalTracer(tracer);
+
 const path = require('path');
 const grpc = require('grpc');
 const pino = require('pino');
@@ -45,13 +69,24 @@ class HipsterShopServer {
    * @param {*} callback  fn(err, ChargeResponse)
    */
   static ChargeServiceHandler (call, callback) {
+    const parentSpan = tracer.scope().active();
+    const span = tracer.startSpan('ChargeServiceHandler', { childOf: parentSpan });
     try {
       logger.info(`PaymentService#Charge invoked with request ${JSON.stringify(call.request)}`);
       const response = charge(call.request);
       callback(null, response);
+      span.finish();
     } catch (err) {
       console.warn(err);
+      span.setTag('error', true);
+      span.log({
+        event: `conversion request failed: ${err}`,
+        'error.object': err,
+        message: err.message,
+        stack: err.stack
+      });
       callback(err);
+      span.finish();
     }
   }
 

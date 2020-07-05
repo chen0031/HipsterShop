@@ -24,11 +24,15 @@ import googleclouddebugger
 import googlecloudprofiler
 from google.auth.exceptions import DefaultCredentialsError
 import grpc
-from opencensus.trace.exporters import print_exporter
-from opencensus.trace.exporters import stackdriver_exporter
-from opencensus.trace.ext.grpc import server_interceptor
-from opencensus.common.transports.async_ import AsyncTransport
-from opencensus.trace.samplers import always_on
+#from opencensus.trace.exporters import print_exporter
+#from opencensus.trace.exporters import stackdriver_exporter
+#from opencensus.trace.ext.grpc import server_interceptor
+#from opencensus.common.transports.async_ import AsyncTransport
+#from opencensus.trace.samplers import always_on
+from opentelemetry import trace
+from opentelemetry.ext import jaeger
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchExportSpanProcessor
 
 import demo_pb2
 import demo_pb2_grpc
@@ -99,19 +103,19 @@ if __name__ == "__main__":
     except KeyError:
         logger.info("Profiler disabled.")
 
-    try:
-      if "DISABLE_TRACING" in os.environ:
-        raise KeyError()
-      else:
-        logger.info("Tracing enabled.")
-        sampler = always_on.AlwaysOnSampler()
-        exporter = stackdriver_exporter.StackdriverExporter(
-          project_id=os.environ.get('GCP_PROJECT_ID'),
-          transport=AsyncTransport)
-        tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(sampler, exporter)
-    except (KeyError, DefaultCredentialsError):
-        logger.info("Tracing disabled.")
-        tracer_interceptor = server_interceptor.OpenCensusServerInterceptor()
+    #try:
+    #  if "DISABLE_TRACING" in os.environ:
+    #    raise KeyError()
+    #  else:
+    #    logger.info("Tracing enabled.")
+    #    sampler = always_on.AlwaysOnSampler()
+    #    exporter = stackdriver_exporter.StackdriverExporter(
+    #      project_id=os.environ.get('GCP_PROJECT_ID'),
+    #      transport=AsyncTransport)
+    #    tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(sampler, exporter)
+    #except (KeyError, DefaultCredentialsError):
+    #    logger.info("Tracing disabled.")
+    #    tracer_interceptor = server_interceptor.OpenCensusServerInterceptor()
 
 
     try:
@@ -130,6 +134,24 @@ if __name__ == "__main__":
             pass
     except KeyError:
         logger.info("Debugger disabled.")
+
+    trace.set_tracer_provider(TracerProvider())
+    jaeger_exporter = jaeger.JaegerSpanExporter(
+         service_name='recommendation',
+         # optional: configure also collector
+         collector_host_name=os.environ.get('JAEGER_HOST'),
+         collector_port=os.environ.get('JAEGER_PORT'),,
+         collector_endpoint='/api/traces?format=jaeger.thrift',
+         # username=xxxx, # optional
+         # password=xxxx, # optional
+    )
+
+    trace.get_tracer_provider().add_span_processor(
+         BatchExportSpanProcessor(jaeger_exporter)
+    )
+
+    tracer = trace.get_tracer(__name__)
+    tracer_interceptor = opentelemetry.ext.grpc.server_interceptor(tracer)
 
     port = os.environ.get('PORT', "8080")
     catalog_addr = os.environ.get('PRODUCT_CATALOG_SERVICE_ADDR', '')
