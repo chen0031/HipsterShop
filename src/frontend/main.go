@@ -94,12 +94,7 @@ func main() {
 	}
 	log.Out = os.Stdout
 
-	if os.Getenv("DISABLE_TRACING") == "" {
-		log.Info("Tracing enabled.")
-		go initTracing(log)
-	} else {
-		log.Info("Tracing disabled.")
-	}
+	initTracing(log)
 
 	if os.Getenv("DISABLE_PROFILER") == "" {
 		log.Info("Profiling enabled.")
@@ -155,7 +150,6 @@ func main() {
 }
 
 func initJaegerTracing(log logrus.FieldLogger) {
-
 	svcAddr := os.Getenv("JAEGER_SERVICE_ADDR")
 	if svcAddr == "" {
 		log.Info("jaeger initialization disabled.")
@@ -226,7 +220,7 @@ func initTracing(log logrus.FieldLogger) {
 	trace.ApplyConfig(trace.Config{DefaultSampler: trace.AlwaysSample()})
 
 	initJaegerTracing(log)
-	initStackdriverTracing(log)
+	// initStackdriverTracing(log)
 
 }
 
