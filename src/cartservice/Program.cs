@@ -147,10 +147,12 @@ namespace cartservice
                             }
 
                             string serviceName = "cartservice";
+                            string pre = "http://"
                             string JAEGER_SERVICE_ADDR = Environment.GetEnvironmentVariable(JAEGER_SERVICE_ADDR);
+                            string JAEGER_ADDR = pre + JAEGER_SERVICE_ADDR
                             ILoggerFactory loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
                             Configuration.SenderConfiguration senderConfiguration = new Configuration.SenderConfiguration(loggerFactory)
-                                             .WithEndpoint("JAEGER_SERVICE_ADDR");
+                                             .WithEndpoint("JAEGER_ADDR");
 
                             // This will log to a default localhost installation of Jaeger.
                             var tracer = new Tracer.Builder(serviceName)
