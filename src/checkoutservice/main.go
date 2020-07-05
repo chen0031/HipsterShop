@@ -69,13 +69,7 @@ type checkoutService struct {
 }
 
 func main() {
-	if os.Getenv("DISABLE_TRACING") == "" {
-		log.Info("Tracing enabled.")
-		go initTracing()
-	} else {
-		log.Info("Tracing disabled.")
-	}
-
+	initTracing()
 	if os.Getenv("DISABLE_PROFILER") == "" {
 		log.Info("Profiling enabled.")
 		go initProfiling("checkoutservice", "1.0.0")
@@ -174,7 +168,7 @@ func initStackdriverTracing() {
 
 func initTracing() {
 	initJaegerTracing()
-	initStackdriverTracing()
+	// initStackdriverTracing()
 }
 
 func initProfiling(service, version string) {
