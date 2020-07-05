@@ -292,9 +292,6 @@ public final class AdService {
     logger.info("Tracing enabled - Stackdriver exporter initialized.");
   }
 
-
-
-
   private static void initJaeger() {
     String jaegerAddr = System.getenv("JAEGER_SERVICE_ADDR");
     if (jaegerAddr != null && !jaegerAddr.isEmpty()) {
