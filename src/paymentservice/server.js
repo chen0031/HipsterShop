@@ -73,18 +73,9 @@ class HipsterShopServer {
       logger.info(`PaymentService#Charge invoked with request ${JSON.stringify(call.request)}`);
       const response = charge(call.request);
       callback(null, response);
-      span.finish();
     } catch (err) {
       console.warn(err);
-      span.setTag('error', true);
-      span.log({
-        event: `conversion request failed: ${err}`,
-        'error.object': err,
-        message: err.message,
-        stack: err.stack
-      });
       callback(err);
-      span.finish();
     }
   }
 
