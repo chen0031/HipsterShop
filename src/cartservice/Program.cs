@@ -151,7 +151,7 @@ namespace cartservice
                             string suf = Environment.GetEnvironmentVariable(JAEGER_SERVICE_ADDR);
                             string JAEGER_ADDR = pre + suf;
                             ILoggerFactory LoggerFactory = new LoggerFactory().AddConsole();
-                            Configuration.SenderConfiguration senderConfiguration = new Configuration.SenderConfiguration(loggerFactory)
+                            Configuration.SenderConfiguration senderConfiguration = new Configuration.SenderConfiguration(LoggerFactory)
                                              .WithEndpoint(JAEGER_ADDR);
 
                             // This will log to a default localhost installation of Jaeger.
