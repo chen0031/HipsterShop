@@ -31,7 +31,6 @@ using Microsoft.Extensions.Logging;
 using OpenTracing;
 using OpenTracing.Contrib.NetCore.CoreFx;
 
-
 namespace cartservice
 {
     class Program
@@ -151,9 +150,9 @@ namespace cartservice
                             string pre = "http://";
                             string suf = Environment.GetEnvironmentVariable(JAEGER_SERVICE_ADDR);
                             string JAEGER_ADDR = pre + suf;
-                            ILoggerFactory loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+                            var loggerFactory = ;
                             Configuration.SenderConfiguration senderConfiguration = new Configuration.SenderConfiguration(loggerFactory)
-                                             .WithEndpoint("JAEGER_ADDR");
+                                             .WithEndpoint(JAEGER_ADDR);
 
                             // This will log to a default localhost installation of Jaeger.
                             var tracer = new Tracer.Builder(serviceName)

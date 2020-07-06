@@ -26,7 +26,6 @@ else {
   });
 }
 
-
 if(process.env.DISABLE_TRACING) {
   console.log("Tracing disabled.")
 }
@@ -47,7 +46,6 @@ else {
     }
   });
 }
-
 
 //Add tracing code
 var initTracer = require('jaeger-client').initTracer;
