@@ -138,7 +138,7 @@ if __name__ == "__main__":
             agent_host_name=os.environ.get('JAEGER_HOST'),
             agent_port=os.environ.get('JAEGER_PORT'),
             endpoint="/api/traces",
-        ))
+        )
         tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(sampler, exporter)
     except:
         tracer_interceptor = server_interceptor.OpenCensusServerInterceptor()
