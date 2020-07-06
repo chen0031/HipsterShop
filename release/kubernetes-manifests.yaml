@@ -32,7 +32,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: gcr.io/google-samples/microservices-demo/emailservice:v0.2.0
+        image: registry.cn-shenzhen.aliyuncs.com/trainticket/hipster-emailservice:testbed
         ports:
         - containerPort: 8080
         env:
@@ -112,10 +112,10 @@ spec:
             value: "currencyservice:7000"
           - name: CART_SERVICE_ADDR
             value: "cartservice:7070"
-          # - name: DISABLE_STATS
-          #   value: "1"
-          # - name: DISABLE_PROFILER
-          #   value: "1"
+          - name: DISABLE_STATS
+            value: "1"
+          - name: DISABLE_PROFILER
+            value: "1"
           - name: JAEGER_SERVICE_ADDR
           value: "jaeger-collector:14268/api/traces"
           resources:
@@ -155,26 +155,26 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: gcr.io/google-samples/microservices-demo/recommendationservice:v0.2.0
+        image: registry.cn-shenzhen.aliyuncs.com/trainticket/hipster-recommendationservice:testbed
         ports:
         - containerPort: 8080
-        readinessProbe:
-          periodSeconds: 5
-          exec:
-            command: ["/bin/grpc_health_probe", "-addr=:8080"]
-        livenessProbe:
-          periodSeconds: 5
-          exec:
-            command: ["/bin/grpc_health_probe", "-addr=:8080"]
+        #readinessProbe:
+        #  periodSeconds: 5
+        #  exec:
+        #    command: ["/bin/grpc_health_probe", "-addr=:8080"]
+        #livenessProbe:
+        #  periodSeconds: 5
+        #  exec:
+        #    command: ["/bin/grpc_health_probe", "-addr=:8080"]
         env:
         - name: PORT
           value: "8080"
         - name: PRODUCT_CATALOG_SERVICE_ADDR
           value: "productcatalogservice:3550"
-        # - name: DISABLE_TRACING
-        #   value: "1"
-        # - name: DISABLE_PROFILER
-        #   value: "1"
+        - name: JAEGER_HOST
+          value: "jaeger-collector"
+        - name: JAEGER_PORT
+          value: 14268
         # - name: DISABLE_DEBUGGER
         #   value: "1"
         resources:
@@ -253,8 +253,6 @@ spec:
             value: "adservice:9555"
           - name: ENV_PLATFORM
             value: "gcp"
-          # - name: DISABLE_TRACING
-          #   value: "1"
           # - name: DISABLE_PROFILER
           #   value: "1"
           - name: JAEGER_SERVICE_ADDR
@@ -285,7 +283,7 @@ kind: Service
 metadata:
   name: frontend-external
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     app: frontend
   ports:
@@ -367,8 +365,6 @@ spec:
         - name: PORT
           value: "3550"
         # - name: DISABLE_STATS
-        #   value: "1"
-        # - name: DISABLE_PROFILER
         #   value: "1"
         - name: JAEGER_SERVICE_ADDR
           value: "jaeger-collector:14268/api/traces"
@@ -564,7 +560,7 @@ spec:
     spec:
       containers:
       - name: server
-        image: gcr.io/google-samples/microservices-demo/shippingservice:v0.2.0
+        image: registry.cn-shenzhen.aliyuncs.com/trainticket/hipster-shippingservice:testdbed
         ports:
         - containerPort: 50051
         env:
@@ -572,19 +568,17 @@ spec:
           value: "50051"
         # - name: DISABLE_STATS
         #   value: "1"
-        # - name: DISABLE_TRACING
-        #   value: "1"
         # - name: DISABLE_PROFILER
         #   value: "1"
-        # - name: JAEGER_SERVICE_ADDR
-        #   value: "jaeger-collector:14268"
-        readinessProbe:
-          periodSeconds: 5
-          exec:
-            command: ["/bin/grpc_health_probe", "-addr=:50051"]
-        livenessProbe:
-          exec:
-            command: ["/bin/grpc_health_probe", "-addr=:50051"]
+        - name: JAEGER_SERVICE_ADDR
+          value: "jaeger-collector:14268/api/traces"
+        #readinessProbe:
+        #  periodSeconds: 5
+        #  exec:
+        #    command: ["/bin/grpc_health_probe", "-addr=:50051"]
+        #livenessProbe:
+        #  exec:
+        #    command: ["/bin/grpc_health_probe", "-addr=:50051"]
         resources:
           requests:
             cpu: 100m
