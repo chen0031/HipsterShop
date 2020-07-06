@@ -150,7 +150,7 @@ namespace cartservice
                             string pre = "http://";
                             string suf = Environment.GetEnvironmentVariable(JAEGER_SERVICE_ADDR);
                             string JAEGER_ADDR = pre + suf;
-                            var loggerFactory = ;
+                            ILoggerFactory LoggerFactory = new LoggerFactory().AddConsole();
                             Configuration.SenderConfiguration senderConfiguration = new Configuration.SenderConfiguration(loggerFactory)
                                              .WithEndpoint(JAEGER_ADDR);
 
