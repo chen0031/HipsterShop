@@ -120,7 +120,7 @@ spec:
           - name: DISABLE_PROFILER
             value: "1"
           - name: JAEGER_SERVICE_ADDR
-          value: "10.68.240.125:14268/api/traces"
+            value: "10.68.240.125:14268/api/traces"
           resources:
             requests:
               cpu: 100m
