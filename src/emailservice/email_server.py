@@ -28,18 +28,9 @@ import demo_pb2
 import demo_pb2_grpc
 from grpc_health.v1 import health_pb2
 from grpc_health.v1 import health_pb2_grpc
-
-#from opencensus.trace.exporters import stackdriver_exporter
-#from opencensus.trace.exporters import print_exporter
-#from opencensus.ext.jaeger.trace_exporter import JaegerExporter
-#from opencensus.trace.ext.grpc import server_interceptor
-#from opencensus.common.transports.async_ import AsyncTransport
-#from opencensus.trace.samplers import always_on
-from opentelemetry import trace
-from opentelemetry.ext import jaeger
-from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import BatchExportSpanProcessor
-from opentelemetry.ext import grpc
+from opencensus.ext.jaeger.trace_exporter import JaegerExporter
+from opencensus.trace import samplers
+from opencensus.ext.grpc import server_interceptor
 
 
 # import googleclouddebugger
@@ -186,8 +177,9 @@ if __name__ == '__main__':
   except KeyError:
       logger.info("Profiler disabled.")
 
-  trace.set_tracer_provider(TracerProvider())
-  jaeger_exporter = jaeger.JaegerSpanExporter(
+  sampler = samplers.AlwaysOnSampler()
+
+  jaeger_exporter = JaegerExporter(
          service_name='emailservice',
          # optional: configure also collector
          collector_host_name=os.environ.get('JAEGER_HOST'),
@@ -197,12 +189,8 @@ if __name__ == '__main__':
          # password=xxxx, # optional
   )
 
-  trace.get_tracer_provider().add_span_processor(
-      BatchExportSpanProcessor(jaeger_exporter)
-  )
-
-  #tracer = trace.get_tracer(__name__)
-  tracer_interceptor = grpc.server_interceptor(trace)
+  tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(
+        sampler, exporter)
 
   # Tracing
   #try:

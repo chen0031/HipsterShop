@@ -23,11 +23,11 @@ from logger import getJSONLogger
 logger = getJSONLogger('emailservice-client')
 
 from opencensus.trace.tracer import Tracer
-from opencensus.trace.exporters import stackdriver_exporter
+from opencensus.ext.jaeger.trace_exporter import JaegerExporter
 from opencensus.trace.ext.grpc import client_interceptor
 
 try:
-    exporter = stackdriver_exporter.StackdriverExporter()
+    exporter = JaegerExporter
     tracer = Tracer(exporter=exporter)
     tracer_interceptor = client_interceptor.OpenCensusClientInterceptor(tracer, host_port='0.0.0.0:8080')
 except:
