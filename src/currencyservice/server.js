@@ -13,21 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const VERSION = require('./package.json').version;
+if(process.env.DISABLE_PROFILER) {
+  console.log("Profiler disabled.")
+}
+else {
+  console.log("Profiler enabled.")
+  require('@google-cloud/profiler').start({
+    serviceContext: {
+      service: 'currencyservice',
+      version: '1.0.0'
+    }
+  });
+}
 
-require('@google-cloud/profiler').start({
-  serviceContext: {
-    service: 'currencyservice',
-    version: '1.0.0'
-  }
-});
-require('@google-cloud/trace-agent').start();
-require('@google-cloud/debug-agent').start({
-  serviceContext: {
-    service: 'currencyservice',
-    version: VERSION
-  }
-});
+
+if(process.env.DISABLE_TRACING) {
+  console.log("Tracing disabled.")
+}
+else {
+  console.log("Tracing enabled.")
+  require('@google-cloud/trace-agent').start();
+}
+
+if(process.env.DISABLE_DEBUGGER) {
+  console.log("Debugger disabled.")
+}
+else {
+  console.log("Debugger enabled.")
+  require('@google-cloud/debug-agent').start({
+    serviceContext: {
+      service: 'currencyservice',
+      version: 'VERSION'
+    }
+  });
+}
 
 
 //Add tracing code
