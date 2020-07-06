@@ -201,8 +201,8 @@ if __name__ == '__main__':
       BatchExportSpanProcessor(jaeger_exporter)
   )
 
-  tracer = trace.get_tracer(__name__)
-  tracer_interceptor = grpc.server_interceptor(tracer)
+  #tracer = trace.get_tracer(__name__)
+  tracer_interceptor = grpc.server_interceptor(trace)
 
   # Tracing
   #try:
