@@ -20,6 +20,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: emailservice
+  namespace: hipster
 spec:
   selector:
     matchLabels:
@@ -64,6 +65,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: emailservice
+  namespace: hipster
 spec:
   type: ClusterIP
   selector:
@@ -77,6 +79,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: checkoutservice
+  namespace: hipster
 spec:
   selector:
     matchLabels:
@@ -130,6 +133,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: checkoutservice
+  namespace: hipster
 spec:
   type: ClusterIP
   selector:
@@ -143,6 +147,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: recommendationservice
+  namespace: hipster
 spec:
   selector:
     matchLabels:
@@ -189,6 +194,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: recommendationservice
+  namespace: hipster
 spec:
   type: ClusterIP
   selector:
@@ -202,6 +208,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
+  namespace: hipster
 spec:
   selector:
     matchLabels:
@@ -269,6 +276,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: frontend
+  namespace: hipster
 spec:
   type: ClusterIP
   selector:
@@ -282,6 +290,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: frontend-external
+  namespace: hipster
 spec:
   type: NodePort
   selector:
@@ -295,6 +304,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: paymentservice
+  namespace: hipster
 spec:
   selector:
     matchLabels:
@@ -333,6 +343,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: paymentservice
+  namespace: hipster
 spec:
   type: ClusterIP
   selector:
@@ -346,6 +357,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: productcatalogservice
+  namespace: hipster
 spec:
   selector:
     matchLabels:
@@ -386,6 +398,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: productcatalogservice
+  namespace: hipster
 spec:
   type: ClusterIP
   selector:
@@ -399,6 +412,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cartservice
+  namespace: hipster
 spec:
   selector:
     matchLabels:
@@ -444,6 +458,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: cartservice
+  namespace: hipster
 spec:
   type: ClusterIP
   selector:
@@ -457,6 +472,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: loadgenerator
+  namespace: hipster
 spec:
   selector:
     matchLabels:
@@ -491,6 +507,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: currencyservice
+  namespace: hipster
 spec:
   selector:
     matchLabels:
@@ -536,6 +553,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: currencyservice
+  namespace: hipster
 spec:
   type: ClusterIP
   selector:
@@ -549,6 +567,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: shippingservice
+  namespace: hipster
 spec:
   selector:
     matchLabels:
@@ -591,6 +610,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: shippingservice
+  namespace: hipster
 spec:
   type: ClusterIP
   selector:
@@ -604,6 +624,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: redis-cart
+  namespace: hipster
 spec:
   selector:
     matchLabels:
@@ -644,6 +665,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: redis-cart
+  namespace: hipster
 spec:
   type: ClusterIP
   selector:
@@ -657,6 +679,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: adservice
+  namespace: hipster
 spec:
   selector:
     matchLabels:
@@ -701,6 +724,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: adservice
+  namespace: hipster
 spec:
   type: ClusterIP
   selector:
