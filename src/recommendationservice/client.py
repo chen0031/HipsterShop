@@ -19,7 +19,7 @@ import grpc
 import demo_pb2
 import demo_pb2_grpc
 
-from opencensus.trace.ext.grpc import server_interceptor
+from opencensus.ext.grpc import client_interceptor
 #from opencensus.common.transports.async_ import AsyncTransport
 from opencensus.trace.samplers import AlwaysOnSampler
 from opencensus.ext.jaeger.trace_exporter import JaegerExporter

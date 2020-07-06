@@ -25,7 +25,7 @@ import googlecloudprofiler
 from google.auth.exceptions import DefaultCredentialsError
 import grpc
 #from opencensus.trace.exporters import stackdriver_exporter
-from opencensus.trace.ext.grpc import server_interceptor
+from opencensus.ext.grpc import server_interceptor
 #from opencensus.common.transports.async_ import AsyncTransport
 from opencensus.trace.samplers import AlwaysOnSampler
 from opencensus.ext.jaeger.trace_exporter import JaegerExporter
