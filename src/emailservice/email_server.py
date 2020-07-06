@@ -168,14 +168,14 @@ if __name__ == '__main__':
   logger.info('starting the email service in dummy mode.')
 
   # Profiler
-  try:
-    if "DISABLE_PROFILER" in os.environ:
-      raise KeyError()
-    else:
-      logger.info("Profiler enabled.")
-      initStackdriverProfiling()
-  except KeyError:
-      logger.info("Profiler disabled.")
+  #try:
+  #  if "DISABLE_PROFILER" in os.environ:
+  #    raise KeyError()
+  #  else:
+  #    logger.info("Profiler enabled.")
+  #    initStackdriverProfiling()
+  #except KeyError:
+  #    logger.info("Profiler disabled.")
 
   sampler = samplers.AlwaysOnSampler()
 
