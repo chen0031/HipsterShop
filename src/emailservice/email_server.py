@@ -190,7 +190,7 @@ if __name__ == '__main__':
   )
 
   tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(
-        sampler, exporter)
+        sampler, jaeger_exporter)
 
   # Tracing
   #try:
