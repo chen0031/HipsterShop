@@ -24,15 +24,11 @@ import googleclouddebugger
 import googlecloudprofiler
 from google.auth.exceptions import DefaultCredentialsError
 import grpc
-#from opencensus.trace.exporters import print_exporter
-#from opencensus.trace.exporters import stackdriver_exporter
-#from opencensus.trace.ext.grpc import server_interceptor
-#from opencensus.common.transports.async_ import AsyncTransport
-#from opencensus.trace.samplers import always_on
-from opentelemetry import trace
-from opentelemetry.ext import jaeger
-from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import BatchExportSpanProcessor
+from opencensus.trace.exporters import stackdriver_exporter
+from opencensus.trace.ext.grpc import server_interceptor
+from opencensus.common.transports.async_ import AsyncTransport
+from opencensus.trace.samplers import AlwaysOnSampler
+from opencensus.ext.jaeger.trace_exporter import JaegerExporter
 
 import demo_pb2
 import demo_pb2_grpc
@@ -135,23 +131,17 @@ if __name__ == "__main__":
     except KeyError:
         logger.info("Debugger disabled.")
 
-    trace.set_tracer_provider(TracerProvider())
-    jaeger_exporter = jaeger.JaegerSpanExporter(
-         service_name='recommendation',
-         # optional: configure also collector
-         collector_host_name=os.environ.get('JAEGER_HOST'),
-         collector_port=os.environ.get('JAEGER_PORT'),
-         collector_endpoint='/api/traces?format=jaeger.thrift',
-         # username=xxxx, # optional
-         # password=xxxx, # optional
-    )
-
-    trace.get_tracer_provider().add_span_processor(
-         BatchExportSpanProcessor(jaeger_exporter)
-    )
-
-    tracer = trace.get_tracer(__name__)
-    tracer_interceptor = opentelemetry.ext.grpc.server_interceptor(tracer)
+    try:
+        sampler = AlwaysOnSampler()
+        exporter=JaegerExporter(
+            service_name='recommendationservice',
+            agent_host_name = os.environ.get('JAEGER_HOST')
+            agent_port = os.environ.get('JAEGER_PORT')
+            endpoint="/api/traces"
+        ))
+        tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(sampler, exporter)
+    except:
+        tracer_interceptor = server_interceptor.OpenCensusServerInterceptor()
 
     port = os.environ.get('PORT', "8080")
     catalog_addr = os.environ.get('PRODUCT_CATALOG_SERVICE_ADDR', '')
