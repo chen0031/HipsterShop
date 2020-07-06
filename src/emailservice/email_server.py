@@ -39,6 +39,7 @@ from opentelemetry import trace
 from opentelemetry.ext import jaeger
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchExportSpanProcessor
+from opentelemetry.ext import grpc
 
 
 # import googleclouddebugger
@@ -201,7 +202,7 @@ if __name__ == '__main__':
   )
 
   tracer = trace.get_tracer(__name__)
-  tracer_interceptor = opentelemetry.ext.grpc.server_interceptor(tracer)
+  tracer_interceptor = grpc.server_interceptor(tracer)
 
   # Tracing
   #try:
