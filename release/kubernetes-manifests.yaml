@@ -42,7 +42,7 @@ spec:
         - name: JAEGER_HOST
           value: "10.68.240.125"
         - name: JAEGER_PORT
-          value: "6831"
+          value: "14268"
         - name: DISABLE_PROFILER
           value: "1"
         #readinessProbe:
@@ -179,7 +179,7 @@ spec:
         - name: JAEGER_HOST
           value: "10.68.240.125"
         - name: JAEGER_PORT
-          value: "6831"
+          value: "14268"
         # - name: DISABLE_DEBUGGER
         #   value: "1"
         resources:
