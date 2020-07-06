@@ -42,7 +42,7 @@ spec:
         - name: JAEGER_HOST
           value: "10.68.240.125"
         - name: JAEGER_PORT
-          value: "14268"
+          value: "6831"
         - name: DISABLE_PROFILER
           value: "1"
         #readinessProbe:
@@ -120,7 +120,7 @@ spec:
           - name: DISABLE_PROFILER
             value: "1"
           - name: JAEGER_SERVICE_ADDR
-            value: "10.68.240.125:14268"
+            value: "http://10.68.240.125:14268/api/traces"
           resources:
             requests:
               cpu: 100m
@@ -179,7 +179,7 @@ spec:
         - name: JAEGER_HOST
           value: "10.68.240.125"
         - name: JAEGER_PORT
-          value: "14268"
+          value: "6831"
         # - name: DISABLE_DEBUGGER
         #   value: "1"
         resources:
@@ -263,7 +263,7 @@ spec:
           # - name: DISABLE_PROFILER
           #   value: "1"
           - name: JAEGER_SERVICE_ADDR
-            value: "10.68.240.125:14268"
+            value: "10.68.240.125:14268/api/traces"
           resources:
             requests:
               cpu: 100m
@@ -324,7 +324,7 @@ spec:
         - name: PORT
           value: "50051"
         - name: JAEGER_SERVICE_ADDR
-          value: "10.68.240.125:14268"
+          value: "10.68.240.125:14268/api/traces"
         #readinessProbe:
         #  exec:
         #    command: ["/bin/grpc_health_probe", "-addr=:50051"]
@@ -379,7 +379,7 @@ spec:
         # - name: DISABLE_STATS
         #   value: "1"
         - name: JAEGER_SERVICE_ADDR
-          value: "10.68.240.125:14268"
+          value: "http://10.68.240.125:14268/api/traces"
         #readinessProbe:
         #  exec:
         #    command: ["/bin/grpc_health_probe", "-addr=:3550"]
@@ -436,7 +436,7 @@ spec:
         - name: LISTEN_ADDR
           value: "0.0.0.0"
         - name: JAEGER_SERVICE_ADDR
-          value: "10.68.240.125:14268"
+          value: "10.68.240.125:14268/api/traces"
         resources:
           requests:
             cpu: 200m
@@ -590,7 +590,7 @@ spec:
         # - name: DISABLE_PROFILER
         #   value: "1"
         - name: JAEGER_SERVICE_ADDR
-          value: "10.68.240.125:14268"
+          value: "10.68.240.125:14268/api/traces"
         #readinessProbe:
         #  periodSeconds: 5
         #  exec:
