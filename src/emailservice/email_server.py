@@ -29,12 +29,15 @@ import demo_pb2_grpc
 from grpc_health.v1 import health_pb2
 from grpc_health.v1 import health_pb2_grpc
 
-from opencensus.trace.exporters import stackdriver_exporter
-from opencensus.trace.exporters import print_exporter
-from opencensus.trace.ext.grpc import server_interceptor
+#from opencensus.trace.exporters import stackdriver_exporter
+#from opencensus.trace.exporters import print_exporter
+#from opencensus.trace.ext.grpc import server_interceptor
+#from opencensus.common.transports.async_ import AsyncTransport
+#from opencensus.trace.samplers import always_on
 from opencensus.common.transports.async_ import AsyncTransport
-from opencensus.trace.samplers import always_on
-
+from opencensus.ext.grpc import server_interceptor
+from opencensus.ext.jaeger.trace_exporter import JaegerExporter
+from opencensus.trace.samplers import AlwaysOnSampler
 # import googleclouddebugger
 import googlecloudprofiler
 
@@ -185,10 +188,17 @@ if __name__ == '__main__':
       raise KeyError()
     else:
       logger.info("Tracing enabled.")
-      sampler = always_on.AlwaysOnSampler()
-      exporter = stackdriver_exporter.StackdriverExporter(
-        project_id=os.environ.get('GCP_PROJECT_ID'),
-        transport=AsyncTransport)
+      logger.info("Tracing enabled.")
+      sampler = AlwaysOnSampler()
+        #exporter = stackdriver_exporter.StackdriverExporter(
+        #  project_id=os.environ.get('GCP_PROJECT_ID'),
+        #  transport=AsyncTransport)
+      exporter=JaegerExporter(
+              service_name='emailservice',
+              host_name=os.environ.get('JAEGER_HOST'),
+              port=os.environ.get('JAEGER_PORT'),
+              transport=AsyncTransport,
+      )
       tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(sampler, exporter)
   except (KeyError, DefaultCredentialsError):
       logger.info("Tracing disabled.")
