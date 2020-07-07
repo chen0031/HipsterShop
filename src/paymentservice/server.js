@@ -10,7 +10,28 @@
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License.
+// limitations under the License..
+
+//Add tracing code
+var initTracer = require('jaeger-client').initTracer;
+
+// See schema https://github.com/jaegertracing/jaeger-client-node/blob/master/src/configuration.js#L37
+var config = {
+  serviceName: 'paymentservice',
+  reporter: {
+    // Provide the traces endpoint; this forces the client to connect directly to the Collector and send
+    // spans over HTTP
+    collectorEndpoint: process.env.JAEGER_SERVICE_ADDR,
+  },
+};
+var options = {
+  tags: {
+    'paymentservice': '0.2.0',
+  },
+};
+const tracer = initTracer(config, options);
+const opentracing = require('opentracing');
+opentracing.initGlobalTracer(tracer);
 
 const path = require('path');
 const grpc = require('grpc');
