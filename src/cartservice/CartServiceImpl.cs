@@ -53,7 +53,7 @@ namespace cartservice
             }
         }
 
-        public override Task<Hipstershop.Cart> GetCart(GetCartRequest request, ServerCallContext context)
+       public override Task<Hipstershop.Cart> GetCart(GetCartRequest request, ServerCallContext context)
         {
             using (GlobalTracer.Instance.BuildSpan("GetCart").StartActive())
             {

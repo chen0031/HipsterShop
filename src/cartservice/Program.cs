@@ -20,6 +20,7 @@ using cartservice.cartstore;
 using cartservice.interfaces;
 using CommandLine;
 using Grpc.Core;
+using Grpc.Core.Interceptors;
 using Microsoft.Extensions.Configuration;
 using OpenTracing.Contrib.Grpc.Interceptors;
 using OpenTracing.Util;
@@ -70,11 +71,11 @@ namespace cartservice
                     {
                         Services =
                         {
-                            // Cart Service Endpoint
-                             Hipstershop.CartService.BindService(new CartServiceImpl(cartStore)).Intercept(tracingInterceptor),
+                             // Cart Service Endpoint
+                              Hipstershop.CartService.BindService(new CartServiceImpl(cartStore)).Intercept(tracingInterceptor),
 
-                             // Health Endpoint
-                             Grpc.Health.V1.Health.BindService(new HealthImpl(cartStore)).Intercept(tracingInterceptor),
+                              // Health Endpoint
+                              Grpc.Health.V1.Health.BindService(new HealthImpl(cartStore)).Intercept(tracingInterceptor),
                         },
                         Ports = { new ServerPort(host, port, ServerCredentials.Insecure) }
                     };
@@ -144,8 +145,11 @@ namespace cartservice
                                     port = int.Parse(portStr);
                                 }
                             }
+
                             string serviceName = "cartservice";
-                            string JAEGER_ADDR = Environment.GetEnvironmentVariable(JAEGER_SERVICE_ADDR);
+                            string pre = "http://";
+                            string suf = Environment.GetEnvironmentVariable(JAEGER_SERVICE_ADDR);
+                            string JAEGER_ADDR = pre + suf;
                             ILoggerFactory LoggerFactory = new LoggerFactory().AddConsole();
                             Configuration.SenderConfiguration senderConfiguration = new Configuration.SenderConfiguration(LoggerFactory)
                                              .WithEndpoint(JAEGER_ADDR);
