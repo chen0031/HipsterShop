@@ -188,7 +188,6 @@ if __name__ == '__main__':
       raise KeyError()
     else:
       logger.info("Tracing enabled.")
-      logger.info("Tracing enabled.")
       sampler = AlwaysOnSampler()
         #exporter = stackdriver_exporter.StackdriverExporter(
         #  project_id=os.environ.get('GCP_PROJECT_ID'),
