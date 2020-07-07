@@ -137,7 +137,7 @@ if __name__ == "__main__":
             service_name='recommendationservice',
             host_name=os.environ.get('JAEGER_HOST'),
             port=os.environ.get('JAEGER_PORT'),
-            collector_endpoint='/api/traces?format=jaeger.thrift',
+            endpoint='/api/traces?format=jaeger.thrift',
         )
         tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(sampler, exporter)
     except:
