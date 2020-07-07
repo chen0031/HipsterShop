@@ -24,6 +24,7 @@ from opencensus.trace.tracer import Tracer
 from opencensus.ext.grpc import client_interceptor
 from opencensus.ext.jaeger.trace_exporter import JaegerExporter
 from logger import getJSONLogger
+from opencensus.common.transports.async_ import AsyncTransport
 logger = getJSONLogger('recommendationservice-server')
 
 if __name__ == "__main__":
@@ -39,7 +40,7 @@ if __name__ == "__main__":
                       service_name='recommendationservice',
                       host_name=os.environ.get('JAEGER_HOST'),
                       port=os.environ.get('JAEGER_PORT'),
-                      transport=AsyncTransport
+                      transport=AsyncTransport,
         )
         tracer = Tracer(exporter=exporter)
         tracer_interceptor = client_interceptor.OpenCensusClientInterceptor(tracer, host_port='localhost:'+port)
