@@ -56,10 +56,10 @@ spec:
         resources:
           requests:
             cpu: 100m
-            memory: 64Mi
+            memory: 128Mi
           limits:
             cpu: 200m
-            memory: 128Mi
+            memory: 256Mi
 ---
 apiVersion: v1
 kind: Service
@@ -298,6 +298,7 @@ spec:
   ports:
   - name: http
     port: 80
+    nodePort: 32710    
     targetPort: 8080
 ---
 apiVersion: apps/v1
