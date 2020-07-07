@@ -27,7 +27,6 @@ else {
   });
 }
 
-
 if(process.env.DISABLE_TRACING) {
   console.log("Tracing disabled.")
 }
@@ -48,6 +47,27 @@ else {
     }
   });
 }
+
+//Add tracing code
+var initTracer = require('jaeger-client').initTracer;
+
+// See schema https://github.com/jaegertracing/jaeger-client-node/blob/master/src/configuration.js#L37
+var config = {
+  serviceName: 'currencyservice',
+  reporter: {
+    // Provide the traces endpoint; this forces the client to connect directly to the Collector and send
+    // spans over HTTP
+    collectorEndpoint: process.env.JAEGER_SERVICE_ADDR,
+  },
+};
+var options = {
+  tags: {
+    'currencyservice': '0.2.0',
+  },
+};
+const tracer = initTracer(config, options);
+const opentracing = require('opentracing');
+opentracing.initGlobalTracer(tracer);
 
 const path = require('path');
 const grpc = require('grpc');
