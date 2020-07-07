@@ -24,11 +24,14 @@ import googleclouddebugger
 import googlecloudprofiler
 from google.auth.exceptions import DefaultCredentialsError
 import grpc
-from opencensus.trace.exporters import print_exporter
-from opencensus.trace.exporters import stackdriver_exporter
-from opencensus.trace.ext.grpc import server_interceptor
+#from opencensus.trace.exporters import print_exporter
+#from opencensus.trace.exporters import stackdriver_exporter
+#from opencensus.trace.ext.grpc import server_interceptor
 from opencensus.common.transports.async_ import AsyncTransport
 from opencensus.trace.samplers import always_on
+from opencensus.ext.grpc import server_interceptor
+from opencensus.ext.jaeger.trace_exporter import JaegerExporter
+from opencensus.trace import samplers
 
 import demo_pb2
 import demo_pb2_grpc
@@ -105,9 +108,15 @@ if __name__ == "__main__":
       else:
         logger.info("Tracing enabled.")
         sampler = always_on.AlwaysOnSampler()
-        exporter = stackdriver_exporter.StackdriverExporter(
-          project_id=os.environ.get('GCP_PROJECT_ID'),
-          transport=AsyncTransport)
+        #exporter = stackdriver_exporter.StackdriverExporter(
+        #  project_id=os.environ.get('GCP_PROJECT_ID'),
+        #  transport=AsyncTransport)
+        exporter=JaegerExporter(
+              service_name='recommendationservice',
+              host_name=os.environ.get('JAEGER_HOST'),
+              port=os.environ.get('JAEGER_PORT'),
+              transport=AsyncTransport,
+        )
         tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(sampler, exporter)
     except (KeyError, DefaultCredentialsError):
         logger.info("Tracing disabled.")

@@ -18,11 +18,11 @@ import sys
 import grpc
 import demo_pb2
 import demo_pb2_grpc
-
+import os
 from opencensus.trace.tracer import Tracer
-from opencensus.trace.exporters import stackdriver_exporter
-from opencensus.trace.ext.grpc import client_interceptor
-
+#from opencensus.trace.exporters import stackdriver_exporter
+from opencensus.ext.grpc import client_interceptor
+from opencensus.ext.jaeger.trace_exporter import JaegerExporter
 from logger import getJSONLogger
 logger = getJSONLogger('recommendationservice-server')
 
@@ -34,7 +34,13 @@ if __name__ == "__main__":
         port = "8080"
 
     try:
-        exporter = stackdriver_exporter.StackdriverExporter()
+        #exporter = stackdriver_exporter.StackdriverExporter()
+        exporter=JaegerExporter(
+                      service_name='recommendationservice',
+                      host_name=os.environ.get('JAEGER_HOST'),
+                      port=os.environ.get('JAEGER_PORT'),
+                      transport=AsyncTransport
+        )
         tracer = Tracer(exporter=exporter)
         tracer_interceptor = client_interceptor.OpenCensusClientInterceptor(tracer, host_port='localhost:'+port)
     except:
