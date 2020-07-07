@@ -185,7 +185,7 @@ if __name__ == '__main__':
          host_name=os.environ.get('JAEGER_HOST'),
          port=os.environ.get('JAEGER_PORT'),
          #endpoint='/api/traces?format=jaeger.thrift',
-         transport='AsyncTransport',
+         transport=AsyncTransport,
          # username=xxxx, # optional
          # password=xxxx, # optional
   )
