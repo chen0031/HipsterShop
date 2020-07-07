@@ -31,7 +31,7 @@ from grpc_health.v1 import health_pb2_grpc
 from opencensus.ext.jaeger.trace_exporter import JaegerExporter
 from opencensus.trace import samplers
 from opencensus.ext.grpc import server_interceptor
-
+from opencensus.common.transports.async_ import AsyncTransport
 
 # import googleclouddebugger
 import googlecloudprofiler
@@ -184,7 +184,8 @@ if __name__ == '__main__':
          # optional: configure also collector
          host_name=os.environ.get('JAEGER_HOST'),
          port=os.environ.get('JAEGER_PORT'),
-         endpoint='/api/traces?format=jaeger.thrift',
+         #endpoint='/api/traces?format=jaeger.thrift',
+         transport='AsyncTransport',
          # username=xxxx, # optional
          # password=xxxx, # optional
   )
