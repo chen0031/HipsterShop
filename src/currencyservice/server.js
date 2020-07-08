@@ -60,14 +60,8 @@ var config = {
     collectorEndpoint: process.env.JAEGER_SERVICE_ADDR,
   },
 };
-var options = {
-  tags: {
-    'currencyservice': '0.2.0',
-  },
-};
-const tracer = initTracer(config, options);
-const opentracing = require('opentracing');
-opentracing.initGlobalTracer(tracer);
+const tracer = initTracer(config);
+const span = tracer.startSpan('change_currency');
 
 const path = require('path');
 const grpc = require('grpc');
@@ -88,7 +82,7 @@ const logger = pino({
   changeLevelName: 'severity',
   useLevelLabels: true
 });
-
+logger.info(config);
 /**
  * Helper function that loads a protobuf file.
  */
@@ -113,6 +107,7 @@ function _loadProto (path) {
 function _getCurrencyData (callback) {
   const data = require('./data/currency_conversion.json');
   callback(data);
+
 }
 
 /**
@@ -166,6 +161,7 @@ function convert (call, callback) {
 
       logger.info(`conversion request successful`);
       callback(null, result);
+      span.finish();
     });
   } catch (err) {
     logger.error(`conversion request failed: ${err}`);
