@@ -24,9 +24,10 @@ var config = {
     collectorEndpoint: process.env.JAEGER_SERVICE_ADDR,
   },
 };
-
 const tracer = initTracer(config);
-const span = tracer.startSpan("charge");
+const opentracing = require('opentracing');
+opentracing.initGlobalTracer(tracer);
+console.log("Tracing Init.")
 
 const path = require('path');
 const grpc = require('grpc');
@@ -60,15 +61,25 @@ class HipsterShopServer {
    * @param {*} call  { ChargeRequest }
    * @param {*} callback  fn(err, ChargeResponse)
    */
-  static ChargeServiceHandler (call, callback) {
+  static ChargeServiceHandler(call, callback) {
+    const parentSpan = tracer.scope().active();
+    const span = tracer.startSpan('ChargeServiceHandler', { childOf: parentSpan });
     try {
       logger.info(`PaymentService#Charge invoked with request ${JSON.stringify(call.request)}`);
       const response = charge(call.request);
-      span.finish();
       callback(null, response);
+      span.finish();
     } catch (err) {
       console.warn(err);
+      span.setTag('error', true);
+      span.log({
+        event: `conversion request failed: ${err}`,
+        'error.object': err,
+        message: err.message,
+        stack: err.stack
+      });
       callback(err);
+      span.finish();
     }
   }
 
