@@ -24,14 +24,9 @@ var config = {
     collectorEndpoint: process.env.JAEGER_SERVICE_ADDR,
   },
 };
-var options = {
-  tags: {
-    'paymentservice': '0.2.0',
-  },
-};
-const tracer = initTracer(config, options);
-const opentracing = require('opentracing');
-opentracing.initGlobalTracer(tracer);
+
+const tracer = initTracer(config);
+const span = tracer.startSpan("charge");
 
 const path = require('path');
 const grpc = require('grpc');
@@ -46,7 +41,7 @@ const logger = pino({
   changeLevelName: 'severity',
   useLevelLabels: true
 });
-
+logger.info(config);
 class HipsterShopServer {
   constructor (protoRoot, port = HipsterShopServer.PORT) {
     this.port = port;
@@ -69,6 +64,7 @@ class HipsterShopServer {
     try {
       logger.info(`PaymentService#Charge invoked with request ${JSON.stringify(call.request)}`);
       const response = charge(call.request);
+      span.finish();
       callback(null, response);
     } catch (err) {
       console.warn(err);
