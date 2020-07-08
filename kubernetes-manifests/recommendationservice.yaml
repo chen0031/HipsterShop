@@ -48,7 +48,7 @@ spec:
         # - name: DISABLE_TRACING
         #   value: "1"
         - name: JAEGER_HOST
-          value: "jaeger-collector"
+          value: "jaeger-collector.hipster"
         - name: JAEGER_PORT
           value: "14268"
         - name: DISABLE_PROFILER
