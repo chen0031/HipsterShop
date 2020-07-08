@@ -21,8 +21,8 @@ var config = {
   reporter: {
     // Provide the traces endpoint; this forces the client to connect directly to the Collector and send
     // spans over HTTP
-    collectorEndpoint: process.env.JAEGER_SERVICE_ADDR,
-  },
+    collectorEndpoint: process.env.JAEGER_SERVICE_ADDR
+  }
 };
 const tracer = initTracer(config);
 const opentracing = require('opentracing');
