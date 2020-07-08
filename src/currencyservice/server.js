@@ -37,17 +37,18 @@ var config = {
   reporter: {
     // Provide the traces endpoint; this forces the client to connect directly to the Collector and send
     // spans over HTTP
-    collectorEndpoint: process.env.JAEGER_SERVICE_ADDR,
-  },
+    collectorEndpoint: process.env.JAEGER_SERVICE_ADDR
+  }
 };
 var options = {
   tags: {
-    'currencyservice': VERSION,
-  },
+    'currencyservice': VERSION
+  }
 };
 var tracer = initTracer(config, options);
 const opentracing = require('opentracing');
 opentracing.initGlobalTracer(tracer);
+console.log("Tracing Init.")
 
 const path = require('path');
 const grpc = require('grpc');
