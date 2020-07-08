@@ -160,7 +160,7 @@ function convert (call, callback) {
       logger.info(`conversion request successful`);
       span.log({ event: 'conversion request successful' })
       callback(null, result);
-      span.finish()
+      span.finish();
     });
   } catch (err) {
     logger.error(`conversion request failed: ${err}`);
@@ -172,7 +172,7 @@ function convert (call, callback) {
       stack: err.stack
     });
     callback(err.message);
-    span.finish()
+    span.finish();
   }
 }
 
