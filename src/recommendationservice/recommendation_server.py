@@ -113,8 +113,10 @@ if __name__ == "__main__":
         exporter=JaegerExporter(
               service_name='recommendationservice',
               host_name=os.environ.get('JAEGER_HOST'),
-              port=os.environ.get('JAEGER_PORT'),
-              transport=AsyncTransport,
+              #port=os.environ.get('JAEGER_PORT'),
+              agent_port=6831,
+              endpint="/api/traces",
+              #transport=AsyncTransport,
         )
         tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(sampler, exporter)
     except (KeyError, DefaultCredentialsError):
