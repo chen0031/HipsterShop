@@ -27,6 +27,7 @@ var config = {
 const tracer = initTracer(config);
 const opentracing = require('opentracing');
 opentracing.initGlobalTracer(tracer);
+const span = opentracing.globalTracer().startSpan('PaymentServiceHandler');
 console.log("Tracing Init.")
 
 const path = require('path');
@@ -62,8 +63,6 @@ class HipsterShopServer {
    * @param {*} callback  fn(err, ChargeResponse)
    */
   static ChargeServiceHandler(call, callback) {
-    const parentSpan = tracer.scope().active();
-    const span = tracer.startSpan('ChargeServiceHandler', { childOf: parentSpan });
     try {
       logger.info(`PaymentService#Charge invoked with request ${JSON.stringify(call.request)}`);
       const response = charge(call.request);

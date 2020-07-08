@@ -48,6 +48,7 @@ var options = {
 var tracer = initTracer(config, options);
 const opentracing = require('opentracing');
 opentracing.initGlobalTracer(tracer);
+const span = opentracing.globalTracer().startSpan('convert');
 console.log("Tracing Init.")
 
 const path = require('path');
@@ -113,12 +114,9 @@ function _carry (amount) {
  * Lists the supported currencies
  */
 function getSupportedCurrencies (call, callback) {
-  const parentSpan = tracer.scope().active();
-  const span = tracer.startSpan('getSupportedCurrencies', { childOf : parentSpan });
   logger.info('Getting supported currencies...');
   _getCurrencyData(span, (data) => {
     callback(null, {currency_codes: Object.keys(data)});
-    span.finish();
   });
 }
 
@@ -127,8 +125,6 @@ function getSupportedCurrencies (call, callback) {
  */
 function convert (call, callback) {
   logger.info('received conversion request');
-  const parentSpan = tracer.scope().active();
-  const span = opentracing.globalTracer().startSpan('convert', { childOf : parentSpan });
   span.setTag('kind', 'server');
 
   try {
@@ -180,10 +176,7 @@ function convert (call, callback) {
  * Endpoint for health checks
  */
 function check (call, callback) {
-  const parentSpan = tracer.scope().active();
-  const span = opentracing.globalTracer().startSpan('health', { childOf : parentSpan });
   callback(null, { status: 'SERVING' });
-  span.finish();
 }
 
 /**
