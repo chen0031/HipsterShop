@@ -13,40 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-if(process.env.DISABLE_PROFILER) {
-  console.log("Profiler disabled.")
-}
-else {
-  console.log("Profiler enabled.")
-  require('@google-cloud/profiler').start({
-    serviceContext: {
-      service: 'currencyservice',
-      version: '1.0.0'
-    }
-  });
-}
-
-if(process.env.DISABLE_TRACING) {
-  console.log("Tracing disabled.")
-}
-else {
-  console.log("Tracing enabled.")
-  require('@google-cloud/trace-agent').start();
-}
-
-if(process.env.DISABLE_DEBUGGER) {
-  console.log("Debugger disabled.")
-}
-else {
-  console.log("Debugger enabled.")
-  require('@google-cloud/debug-agent').start({
-    serviceContext: {
-      service: 'currencyservice',
-      version: 'VERSION'
-    }
-  });
-}
+const VERSION = require('./package.json').version;
+require('@google-cloud/profiler').start({
+  serviceContext: {
+    service: 'currencyservice',
+    version: '1.0.0'
+  }
+});
+require('@google-cloud/trace-agent').start();
+require('@google-cloud/debug-agent').start({
+  serviceContext: {
+    service: 'currencyservice',
+    version: VERSION
+  }
+});
 
 //Add tracing code
 var initTracer = require('jaeger-client').initTracer;
@@ -60,8 +40,14 @@ var config = {
     collectorEndpoint: process.env.JAEGER_SERVICE_ADDR,
   },
 };
-const tracer = initTracer(config);
-const span = tracer.startSpan('change_currency');
+var options = {
+  tags: {
+    'currencyservice': VERSION,
+  },
+};
+var tracer = initTracer(config, options);
+const opentracing = require('opentracing');
+opentracing.initGlobalTracer(tracer);
 
 const path = require('path');
 const grpc = require('grpc');
@@ -104,10 +90,11 @@ function _loadProto (path) {
  * Helper function that gets currency data from a stored JSON file
  * Uses public data from European Central Bank
  */
-function _getCurrencyData (callback) {
+function _getCurrencyData (parentSpan, callback) {
+  const span = parentSpan.tracer().startSpan('_getCurrencyData', { childOf : parentSpan });
   const data = require('./data/currency_conversion.json');
   callback(data);
-
+  span.finish();
 }
 
 /**
@@ -125,9 +112,12 @@ function _carry (amount) {
  * Lists the supported currencies
  */
 function getSupportedCurrencies (call, callback) {
+  const parentSpan = tracer.scope().active();
+  const span = tracer.startSpan('getSupportedCurrencies', { childOf : parentSpan });
   logger.info('Getting supported currencies...');
-  _getCurrencyData((data) => {
+  _getCurrencyData(span, (data) => {
     callback(null, {currency_codes: Object.keys(data)});
+    span.finish();
   });
 }
 
@@ -136,8 +126,12 @@ function getSupportedCurrencies (call, callback) {
  */
 function convert (call, callback) {
   logger.info('received conversion request');
+  const parentSpan = tracer.scope().active();
+  const span = opentracing.globalTracer().startSpan('convert', { childOf : parentSpan });
+  span.setTag('kind', 'server');
+
   try {
-    _getCurrencyData((data) => {
+    _getCurrencyData(span, (data) => {
       const request = call.request;
 
       // Convert: from_currency --> EUR
@@ -146,6 +140,9 @@ function convert (call, callback) {
         units: from.units / data[from.currency_code],
         nanos: from.nanos / data[from.currency_code]
       });
+
+      span.setTag('currency_code.from', from.currency_code);
+      span.setTag('currency_code.to', request.to_code);
 
       euros.nanos = Math.round(euros.nanos);
 
@@ -160,12 +157,21 @@ function convert (call, callback) {
       result.currency_code = request.to_code;
 
       logger.info(`conversion request successful`);
+      span.log({ event: 'conversion request successful' })
       callback(null, result);
-      span.finish();
+      span.finish()
     });
   } catch (err) {
     logger.error(`conversion request failed: ${err}`);
+    span.setTag('error', true);
+    span.log({
+      event: `conversion request failed: ${err}`,
+      'error.object': err,
+      message: err.message,
+      stack: err.stack
+    });
     callback(err.message);
+    span.finish()
   }
 }
 
@@ -173,7 +179,10 @@ function convert (call, callback) {
  * Endpoint for health checks
  */
 function check (call, callback) {
+  const parentSpan = tracer.scope().active();
+  const span = opentracing.globalTracer().startSpan('health', { childOf : parentSpan });
   callback(null, { status: 'SERVING' });
+  span.finish();
 }
 
 /**
