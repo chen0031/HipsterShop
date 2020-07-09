@@ -110,6 +110,7 @@ if __name__ == "__main__":
         #exporter = stackdriver_exporter.StackdriverExporter(
         #  project_id=os.environ.get('GCP_PROJECT_ID'),
         #  transport=AsyncTransport)
+
         exporter=JaegerExporter(
               service_name='recommendationservice',
               host_name=os.environ.get('JAEGER_HOST'),
@@ -118,6 +119,7 @@ if __name__ == "__main__":
               endpoint="/api/traces",
               #transport=AsyncTransport,
         )
+        logger.info(exporter)
         tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(sampler, exporter)
     except (KeyError, DefaultCredentialsError):
         logger.info("Tracing disabled.")
