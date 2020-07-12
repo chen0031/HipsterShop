@@ -32,8 +32,7 @@ from grpc_health.v1 import health_pb2_grpc
 from opencensus.ext.grpc import server_interceptor
 from opencensus.common.transports.async_ import AsyncTransport
 from opencensus.trace.samplers import AlwaysOnSampler
-#from opencensus.ext.zipkin.trace_exporter import ZipkinExporter
-from opencensus.ext.jaeger.trace_exporter import JaegerExporter
+from opencensus.ext.zipkin.trace_exporter import ZipkinExporter
 from opencensus.trace import tracer as tracer_module
 
 # import googleclouddebugger
@@ -184,7 +183,7 @@ if __name__ == '__main__':
   # Tracing
   logger.info("Tracing enabled.")
   sampler = AlwaysOnSampler()
-  exporter=JaegerExporter(
+  exporter=ZipkinExporter(
                 service_name='emailservice',
                 host_name=os.environ.get('JAEGER_HOST'),
                 port=os.environ.get('JAEGER_PORT'),

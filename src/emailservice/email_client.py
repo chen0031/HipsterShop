@@ -26,12 +26,12 @@ from opencensus.trace.tracer import Tracer
 #from opencensus.trace.exporters import stackdriver_exporter
 #from opencensus.trace.ext.grpc import client_interceptor
 from opencensus.ext.grpc import client_interceptor
-#from opencensus.ext.zipkin.trace_exporter import ZipkinExporter
-from opencensus.ext.jaeger.trace_exporter import JaegerExporter
+from opencensus.ext.zipkin.trace_exporter import ZipkinExporter
+
 
 try:
     #exporter = stackdriver_exporter.StackdriverExporter()
-    exporter=JaegerExporter(
+    exporter=ZipkinExporter(
                 service_name='emailservice',
                 host_name=os.environ.get('JAEGER_HOST'),
                 port=os.environ.get('JAEGER_PORT'),
