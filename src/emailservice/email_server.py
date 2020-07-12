@@ -29,28 +29,15 @@ import demo_pb2_grpc
 from grpc_health.v1 import health_pb2
 from grpc_health.v1 import health_pb2_grpc
 
-#from opencensus.trace.exporters import stackdriver_exporter
-#from opencensus.trace.exporters import print_exporter
-#from opencensus.trace.ext.grpc import server_interceptor
-#from opencensus.common.transports.async_ import AsyncTransport
-#from opencensus.trace.samplers import always_on
 from opencensus.common.transports.async_ import AsyncTransport
-from opencensus.ext.grpc import server_interceptor
-from opencensus.ext.jaeger.trace_exporter import JaegerExporter
 from opencensus.trace.samplers import AlwaysOnSampler
-# import googleclouddebugger
+from jaeger_client import Config
+from opencensus.ext.grpc import server_interceptor
+from opencensus.ext.stackdriver import trace_exporter as stackdriver_exporter
 import googlecloudprofiler
 
 from logger import getJSONLogger
 logger = getJSONLogger('emailservice-server')
-
-# try:
-#     googleclouddebugger.enable(
-#         module='emailserver',
-#         version='1.0.0'
-#     )
-# except:
-#     pass
 
 # Loads confirmation email template from file
 env = Environment(
@@ -182,6 +169,19 @@ if __name__ == '__main__':
   except KeyError:
       logger.info("Profiler disabled.")
 
+  config = Config(
+        config={ # usually read from some yaml config
+            'sampler': {
+                'type': 'const',
+                'param': 1,
+            },
+            'propagation ': 'b3',
+        },
+        service_name='emailservice',
+        validate=True,
+  )
+  # this call also sets opentracing.tracer
+  tracer = config.initialize_tracer()
   # Tracing
   try:
     if "DISABLE_TRACING" in os.environ:
@@ -189,15 +189,9 @@ if __name__ == '__main__':
     else:
       logger.info("Tracing enabled.")
       sampler = AlwaysOnSampler()
-        #exporter = stackdriver_exporter.StackdriverExporter(
-        #  project_id=os.environ.get('GCP_PROJECT_ID'),
-        #  transport=AsyncTransport)
-      exporter=JaegerExporter(
-              service_name='emailservice',
-              host_name=os.environ.get('JAEGER_HOST'),
-              port=os.environ.get('JAEGER_PORT'),
-              transport=AsyncTransport,
-      )
+      exporter = stackdriver_exporter.StackdriverExporter(
+        project_id=os.environ.get('GCP_PROJECT_ID'),
+        transport=AsyncTransport)
       tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(sampler, exporter)
   except (KeyError, DefaultCredentialsError):
       logger.info("Tracing disabled.")
