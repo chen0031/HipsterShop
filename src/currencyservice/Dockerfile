@@ -17,7 +17,8 @@ RUN npm install \
         @opentelemetry/core \
         @opentelemetry/node \
         @opentelemetry/tracing \
-        @opentelemetry/exporter-jaeger \ # add exporters as needed
+        @opentelemetry/exporter-jaeger \
+        @opentelemetry/plugin-grpc 
 RUN npm install --only=production
 
 FROM base
