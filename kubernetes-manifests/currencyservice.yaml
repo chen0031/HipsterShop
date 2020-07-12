@@ -42,8 +42,8 @@ spec:
           value: "1"
         - name: DISABLE_DEBUGGER
           value: "1"
-        - name: JAEGER_SERVICE_ADDR
-          value: "http://10.68.94.73:14268/api/traces"
+        - name: JAEGER_ENDPOINT
+          value: "http://10.68.94.73:14268"
         #readinessProbe:
         #  exec:
         #    command: ["/bin/grpc_health_probe", "-addr=:7000"]

@@ -1,25 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d3df5f16-dc05-47fd-a523-1dcc6928ddb5" name="Default Changelist" comment="change zipkin exporter to jaeger">
+    <list default="true" id="d3df5f16-dc05-47fd-a523-1dcc6928ddb5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/adservice.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/adservice.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/cartservice.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/cartservice.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/checkoutservice.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/checkoutservice.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/currencyservice.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/currencyservice.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/emailservice.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/emailservice.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/frontend.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/frontend.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/loadgenerator.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/loadgenerator.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/paymentservice.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/paymentservice.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/productcatalogservice.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/productcatalogservice.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/recommendationservice.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/recommendationservice.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/redis.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/redis.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/shippingservice.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/shippingservice.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/emailservice/email_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/emailservice/email_client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/emailservice/email_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/emailservice/email_server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/emailservice/requirements.in" beforeDir="false" afterPath="$PROJECT_DIR$/src/emailservice/requirements.in" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/emailservice/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/emailservice/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/currencyservice/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/src/currencyservice/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/currencyservice/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/currencyservice/server.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +16,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="GO_FMT" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Use jaeger client to trace" />
@@ -40,18 +26,20 @@
     <MESSAGE value="change zipkin exporter to jaeger exporter" />
     <MESSAGE value="change zipkin exporter to jaeger" />
     <MESSAGE value="change jaeger exporter to zipkin" />
-    <option name="LAST_COMMIT_MESSAGE" value="change jaeger exporter to zipkin" />
+    <MESSAGE value="Add opentelemetry for email service" />
+    <MESSAGE value="update deploy yaml" />
+    <option name="LAST_COMMIT_MESSAGE" value="update deploy yaml" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="-1378" y="102" width="804" height="875" key="CommitChangelistDialog2" timestamp="1594547701335">
+    <state x="-1378" y="102" width="804" height="875" key="CommitChangelistDialog2" timestamp="1594551572009">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="-1378" y="102" key="CommitChangelistDialog2/74.0.1846.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1594547701335" />
+    <state x="-1378" y="102" key="CommitChangelistDialog2/74.0.1846.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1594551572009" />
     <state x="595" y="102" width="804" height="875" key="CommitChangelistDialog2/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1594547319328" />
-    <state x="-1384" y="272" key="Vcs.Push.Dialog.v2" timestamp="1594547708568">
+    <state x="-1384" y="272" key="Vcs.Push.Dialog.v2" timestamp="1594551577611">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="-1384" y="272" key="Vcs.Push.Dialog.v2/74.0.1846.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1594547708568" />
+    <state x="-1384" y="272" key="Vcs.Push.Dialog.v2/74.0.1846.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1594551577611" />
     <state x="589" y="272" key="Vcs.Push.Dialog.v2/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1594547324101" />
   </component>
 </project>

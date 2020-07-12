@@ -49,6 +49,34 @@ else {
   });
 }
 
+const { NodeTracerProvider } = require("@opentelemetry/node");
+const { SimpleSpanProcessor } = require("@opentelemetry/tracing");
+const { JaegerExporter } = require("@opentelemetry/exporter-jaeger");
+const { B3Propagator } = require("@opentelemetry/core");
+
+const tracerProvider = new NodeTracerProvider();
+
+/**
+ * The SimpleSpanProcessor does no batching and exports spans
+ * immediately when they end. For most production use cases,
+ * OpenTelemetry recommends use of the BatchSpanProcessor.
+ */
+tracerProvider.addSpanProcessor(
+    new BatchSpanProcessor(
+        new JaegerExporter({
+          serviceName: 'currencyservice'
+        })
+    )
+);
+
+tracerProvider.register({
+  // Use B3 Propagation
+  propagator: new B3Propagator(),
+
+  // Skip registering a default context manager
+  contextManager: null,
+});
+
 const path = require('path');
 const grpc = require('grpc');
 const pino = require('pino');
