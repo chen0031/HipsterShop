@@ -23,21 +23,40 @@ import grpc
 from jinja2 import Environment, FileSystemLoader, select_autoescape, TemplateError
 from google.api_core.exceptions import GoogleAPICallError
 from google.auth.exceptions import DefaultCredentialsError
-
+import googlecloudprofiler
 import demo_pb2
 import demo_pb2_grpc
 from grpc_health.v1 import health_pb2
 from grpc_health.v1 import health_pb2_grpc
 
-from opencensus.common.transports.async_ import AsyncTransport
-from opencensus.trace.samplers import AlwaysOnSampler
-from jaeger_client import Config
-from opencensus.ext.grpc import server_interceptor
-from opencensus.ext.stackdriver import trace_exporter as stackdriver_exporter
-import googlecloudprofiler
+from opentelemetry import trace
+from opentelemetry.ext.grpc import server_interceptor
+from opentelemetry.ext.grpc.grpcext import intercept_server
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchExportSpanProcessor
+from opentelemetry.ext.jaeger import JaegerSpanExporter
+
+trace.set_tracer_provider(TracerProvider())
+tracer = trace.get_tracer(__name__)
+
+exporter = JaegerSpanExporter(
+    service_name="emailservice",
+    # configure agent
+    #agent_host_name="localhost",
+    #agent_port=6831,
+    # optional: configure also collector
+    collector_host_name=os.environ.get('JAEGER_HOST'),
+    collector_port=os.environ.get('JAEGER_PORT'),
+    collector_endpoint="/api/traces?format=jaeger.thrift",
+    # username=xxxx, # optional
+    # password=xxxx, # optional
+)
+span_processor = BatchExportSpanProcessor(exporter)
+trace.get_tracer_provider().add_span_processor(span_processor)
 
 from logger import getJSONLogger
 logger = getJSONLogger('emailservice-server')
+
 
 # Loads confirmation email template from file
 env = Environment(
@@ -109,8 +128,10 @@ class HealthCheck():
       status=health_pb2.HealthCheckResponse.SERVING)
 
 def start(dummy_mode):
-  server = grpc.server(futures.ThreadPoolExecutor(max_workers=10),
-                       interceptors=(tracer_interceptor,))
+  #server = grpc.server(futures.ThreadPoolExecutor(max_workers=10),interceptors=(tracer_interceptor,))
+  server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+  server = intercept_server(server, server_interceptor())
+
   service = None
   if dummy_mode:
     service = DummyEmailService()
@@ -168,33 +189,5 @@ if __name__ == '__main__':
       initStackdriverProfiling()
   except KeyError:
       logger.info("Profiler disabled.")
-
-  config = Config(
-        config={ # usually read from some yaml config
-            'sampler': {
-                'type': 'const',
-                'param': 1,
-            },
-            'propagation ': 'b3',
-        },
-        service_name='emailservice',
-        validate=True,
-  )
-  # this call also sets opentracing.tracer
-  tracer = config.initialize_tracer()
-  # Tracing
-  try:
-    if "DISABLE_TRACING" in os.environ:
-      raise KeyError()
-    else:
-      logger.info("Tracing enabled.")
-      sampler = AlwaysOnSampler()
-      exporter = stackdriver_exporter.StackdriverExporter(
-        project_id=os.environ.get('GCP_PROJECT_ID'),
-        transport=AsyncTransport)
-      tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(sampler, exporter)
-  except (KeyError, DefaultCredentialsError):
-      logger.info("Tracing disabled.")
-      tracer_interceptor = server_interceptor.OpenCensusServerInterceptor()
 
   start(dummy_mode = True)

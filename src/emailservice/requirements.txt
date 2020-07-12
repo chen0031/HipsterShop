@@ -31,7 +31,7 @@ rsa==4.0                  # via google-auth
 six==1.12.0               # via google-api-core, google-api-python-client, google-auth, grpcio, protobuf
 uritemplate==3.0.0        # via google-api-python-client
 urllib3==1.24.2           # via requests
-jaeger-client==4.0.0      # via requests
-opencensus==0.7.1         # via requests
-opencensus.ext.grpc==0.7.1  # via requests
-opencensus.ext.stackdriver==0.7.1   # via requests
+opentelemetry-api
+opentelemetry-sdk
+opentelemetry-ext-jaeger
+opentelemetry.ext.grpc

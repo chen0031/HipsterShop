@@ -22,20 +22,23 @@ import demo_pb2_grpc
 from logger import getJSONLogger
 logger = getJSONLogger('emailservice-client')
 
-from opencensus.trace.tracer import Tracer
-from opencensus.ext.stackdriver import trace_exporter as stackdriver_exporter
-from opencensus.ext.grpc import client_interceptor
+from opentelemetry import trace
+from opentelemetry.ext.grpc import client_interceptor
+from opentelemetry.ext.grpc.grpcext import intercept_channel
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import (
+    ConsoleSpanExporter,
+    SimpleExportSpanProcessor,
+)
 
-try:
-    exporter = stackdriver_exporter.StackdriverExporter()
-    tracer = Tracer(exporter=exporter)
-    tracer_interceptor = client_interceptor.OpenCensusClientInterceptor(tracer, host_port='0.0.0.0:8080')
-except:
-    tracer_interceptor = client_interceptor.OpenCensusClientInterceptor()
+trace.set_tracer_provider(TracerProvider())
+trace.get_tracer_provider().add_span_processor(
+    SimpleExportSpanProcessor(ConsoleSpanExporter())
+)
 
 def send_confirmation_email(email, order):
   channel = grpc.insecure_channel('0.0.0.0:8080')
-  channel = grpc.intercept_channel(channel, tracer_interceptor)
+  channel = intercept_channel(channel, client_interceptor())
   stub = demo_pb2_grpc.EmailServiceStub(channel)
   try:
     response = stub.SendOrderConfirmation(demo_pb2.SendOrderConfirmationRequest(
