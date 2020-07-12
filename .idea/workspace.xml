@@ -1,129 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="44f86fe9-4b47-40ba-9cee-f93581cd4be0" name="Default" comment="delete useless code" />
+    <list default="true" id="d3df5f16-dc05-47fd-a523-1dcc6928ddb5" name="Default Changelist" comment="change zipkin exporter to jaeger">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/adservice.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/adservice.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/cartservice.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/cartservice.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/checkoutservice.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/checkoutservice.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/currencyservice.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/currencyservice.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/emailservice.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/emailservice.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/frontend.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/frontend.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/loadgenerator.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/loadgenerator.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/paymentservice.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/paymentservice.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/productcatalogservice.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/productcatalogservice.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/recommendationservice.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/recommendationservice.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/redis.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/redis.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/shippingservice.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/shippingservice.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/emailservice/email_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/emailservice/email_client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/emailservice/email_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/emailservice/email_server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/emailservice/requirements.in" beforeDir="false" afterPath="$PROJECT_DIR$/src/emailservice/requirements.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/emailservice/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/emailservice/requirements.txt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="GOROOT" path="C:\Go" />
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="dev-opentelemetry" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="GoDepProject">
-    <exec-path>C:\gopath\bin\dep.exe</exec-path>
-  </component>
-  <component name="GoLibraries">
-    <option name="indexEntireGoPath" value="false" />
-  </component>
-  <component name="ProjectId" id="1eCmOOQl5dTKSOgobIFZEpFm8oc" />
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="GO_FMT" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="configurable.Global.GOPATH.is.expanded" value="true" />
-    <property name="configurable.Module.GOPATH.is.expanded" value="true" />
-    <property name="configurable.Project.GOPATH.is.expanded" value="true" />
-    <property name="go.gopath.indexing.explicitly.defined" value="true" />
-    <property name="go.import.settings.migrated" value="true" />
-    <property name="go.sdk.automatically.set" value="true" />
-    <property name="go.tried.to.enable.integration.dep.integrator" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
-    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="go.dep" />
-  </component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\gopath\src\HipsterShop\src\cartservice" />
-    </key>
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix google trace error" />
-    <MESSAGE value="Modify jaeger exporter code" />
-    <MESSAGE value="Add dependency package" />
-    <MESSAGE value="Update deployment yaml" />
-    <MESSAGE value="remove function span" />
-    <MESSAGE value="fix some bug" />
-    <MESSAGE value="update deployment" />
-    <MESSAGE value="modify tracing code" />
-    <MESSAGE value="add opencensus code" />
-    <MESSAGE value="Modify jaeger endpoint" />
-    <MESSAGE value="update deployment yaml" />
-    <MESSAGE value="Add jaeger exporter code" />
-    <MESSAGE value="Update deploy yaml" />
-    <MESSAGE value="Fix some bugs" />
-    <MESSAGE value="Add tracing code for currencyservice" />
-    <MESSAGE value="Add tracing code for paymentservice" />
-    <MESSAGE value="Add tracing code for emailservice" />
-    <MESSAGE value="Add tracing code for cartservice" />
-    <MESSAGE value="fix some bugs" />
-    <MESSAGE value="update inject code" />
-    <MESSAGE value="Add span code" />
-    <MESSAGE value="update deploy yaml" />
-    <MESSAGE value="add span code" />
-    <MESSAGE value="update recommendationservice jaeger exporter" />
-    <MESSAGE value="delete useless code" />
-    <option name="LAST_COMMIT_MESSAGE" value="delete useless code" />
-  </component>
-  <component name="VgoProject">
-    <integration-enabled>true</integration-enabled>
-    <environment>
-      <map>
-        <entry key="GOPROXY" value="https://goproxy.cn" />
-      </map>
-    </environment>
+    <MESSAGE value="Use jaeger client to trace" />
+    <MESSAGE value="Add opentelemetry code for email service" />
+    <MESSAGE value="update jaeger address" />
+    <MESSAGE value="add zipkin exporter" />
+    <MESSAGE value="change zipkin exporter to jaeger exporter" />
+    <MESSAGE value="change zipkin exporter to jaeger" />
+    <MESSAGE value="change jaeger exporter to zipkin" />
+    <option name="LAST_COMMIT_MESSAGE" value="change jaeger exporter to zipkin" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="789" y="198" key="#GOPATH" timestamp="1593834547402">
-      <screen x="74" y="0" width="1846" height="1080" />
-    </state>
-    <state x="789" y="198" key="#GOPATH/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1593834547402" />
-    <state x="-1362" y="102" key="CommitChangelistDialog2" timestamp="1594516723269">
+    <state x="-1378" y="102" width="804" height="875" key="CommitChangelistDialog2" timestamp="1594547701335">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="-1362" y="102" key="CommitChangelistDialog2/74.0.1846.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1594516723269" />
-    <state x="610" y="102" key="CommitChangelistDialog2/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1594205796859" />
-    <state x="-1679" y="90" key="DiffContextDialog" timestamp="1594516723255">
+    <state x="-1378" y="102" key="CommitChangelistDialog2/74.0.1846.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1594547701335" />
+    <state x="595" y="102" width="804" height="875" key="CommitChangelistDialog2/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1594547319328" />
+    <state x="-1384" y="272" key="Vcs.Push.Dialog.v2" timestamp="1594547708568">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="-1679" y="90" key="DiffContextDialog/74.0.1846.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1594516723255" />
-    <state x="903" y="399" key="EnvironmentVariablesDialog" timestamp="1593834474865">
-      <screen x="74" y="0" width="1846" height="1080" />
-    </state>
-    <state x="903" y="399" key="EnvironmentVariablesDialog/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1593834474865" />
-    <state x="-1169" y="294" key="FileChooserDialogImpl" timestamp="1594364648541">
-      <screen x="-1920" y="0" width="1920" height="1080" />
-    </state>
-    <state x="-1169" y="294" key="FileChooserDialogImpl/74.0.1846.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1594364648541" />
-    <state x="796" y="294" key="FileChooserDialogImpl/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1594114821776" />
-    <state x="-1459" y="184" key="SettingsEditor" timestamp="1594365210015">
-      <screen x="-1920" y="0" width="1920" height="1080" />
-    </state>
-    <state x="-1459" y="184" key="SettingsEditor/74.0.1846.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1594365210015" />
-    <state x="242" y="196" key="SettingsEditor/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1593834941994" />
-    <state x="605" y="272" key="Vcs.Push.Dialog.v2" timestamp="1594205800539">
-      <screen x="74" y="0" width="1846" height="1080" />
-    </state>
-    <state x="-1368" y="272" key="Vcs.Push.Dialog.v2/74.0.1846.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1594178407711" />
-    <state x="605" y="272" key="Vcs.Push.Dialog.v2/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1594205800539" />
-    <state x="715" y="326" key="git4idea.merge.GitPullDialog" timestamp="1594205280040">
-      <screen x="74" y="0" width="1846" height="1080" />
-    </state>
-    <state x="-1253" y="326" key="git4idea.merge.GitPullDialog/74.0.1846.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1594092326603" />
-    <state x="715" y="326" key="git4idea.merge.GitPullDialog/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1594205280040" />
+    <state x="-1384" y="272" key="Vcs.Push.Dialog.v2/74.0.1846.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1594547708568" />
+    <state x="589" y="272" key="Vcs.Push.Dialog.v2/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1594547324101" />
   </component>
 </project>
