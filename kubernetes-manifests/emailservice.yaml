@@ -29,7 +29,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: registry.cn-shenzhen.aliyuncs.com/trainticket/hipster-emailservice:v0.2.0
+        image: registry.cn-shenzhen.aliyuncs.com/trainticket/hipster-emailservice:testbed
         ports:
         - containerPort: 8080
         env:
@@ -39,9 +39,9 @@ spec:
         #   value: "1"
         - name: DISABLE_PROFILER
           value: "1"
-        - name: JAEGER_AGENT_HOST
+        - name: JAEGER_HOST
           value: "10.68.94.73"
-        - name: JAEGER_AGENT_PORT
+        - name: JAEGER_PORT
           value: "14268"
         #readinessProbe:
         #  periodSeconds: 5
