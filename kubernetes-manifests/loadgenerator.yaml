@@ -15,6 +15,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: loadgenerator
+  namespace: hipster
 spec:
   selector:
     matchLabels:
@@ -31,7 +32,7 @@ spec:
       restartPolicy: Always
       containers:
       - name: main
-        image: loadgenerator
+        image: registry.cn-shenzhen.aliyuncs.com/trainticket/hipster-loadgenerator:testbed #loadgenerator
         env:
         - name: FRONTEND_ADDR
           value: "frontend:80"

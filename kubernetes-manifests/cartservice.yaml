@@ -16,6 +16,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cartservice
+  namespace: hipster
 spec:
   selector:
     matchLabels:
@@ -28,7 +29,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: cartservice
+        image: registry.cn-shenzhen.aliyuncs.com/trainticket/hipster-cartservice:testbedv2
         ports:
         - containerPort: 7070
         env:
@@ -38,6 +39,8 @@ spec:
           value: "7070"
         - name: LISTEN_ADDR
           value: "0.0.0.0"
+        - name: JAEGER_SERVICE_ADDR
+          value: "http://10.68.94.73:14268/api/traces"
         resources:
           requests:
             cpu: 200m
@@ -45,20 +48,21 @@ spec:
           limits:
             cpu: 300m
             memory: 128Mi
-        readinessProbe:
-          initialDelaySeconds: 15
-          exec:
-            command: ["/bin/grpc_health_probe", "-addr=:7070", "-rpc-timeout=5s"]
-        livenessProbe:
-          initialDelaySeconds: 15
-          periodSeconds: 10
-          exec:
-            command: ["/bin/grpc_health_probe", "-addr=:7070", "-rpc-timeout=5s"]
+        #readinessProbe:
+        #  initialDelaySeconds: 15
+        #  exec:
+        #    command: ["/bin/grpc_health_probe", "-addr=:7070", "-rpc-timeout=5s"]
+        #livenessProbe:
+        #  initialDelaySeconds: 15
+        #  periodSeconds: 10
+        #  exec:
+        #    command: ["/bin/grpc_health_probe", "-addr=:7070", "-rpc-timeout=5s"]
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: cartservice
+  namespace: hipster
 spec:
   type: ClusterIP
   selector:

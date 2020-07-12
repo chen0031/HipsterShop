@@ -16,6 +16,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: emailservice
+  namespace: hipster
 spec:
   selector:
     matchLabels:
@@ -28,7 +29,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: emailservice
+        image: registry.cn-shenzhen.aliyuncs.com/trainticket/hipster-emailservice:v0.2.0
         ports:
         - containerPort: 8080
         env:
@@ -38,26 +39,31 @@ spec:
         #   value: "1"
         - name: DISABLE_PROFILER
           value: "1"
-        readinessProbe:
-          periodSeconds: 5
-          exec:
-            command: ["/bin/grpc_health_probe", "-addr=:8080"]
-        livenessProbe:
-          periodSeconds: 5
-          exec:
-            command: ["/bin/grpc_health_probe", "-addr=:8080"]
+        - name: JAEGER_AGENT_HOST
+          value: "10.68.94.73"
+        - name: JAEGER_AGENT_PORT
+          value: "14268"
+        #readinessProbe:
+        #  periodSeconds: 5
+        #  exec:
+        #    command: ["/bin/grpc_health_probe", "-addr=:8080"]
+        #livenessProbe:
+        #  periodSeconds: 5
+        #  exec:
+        #    command: ["/bin/grpc_health_probe", "-addr=:8080"]
         resources:
           requests:
             cpu: 100m
-            memory: 64Mi
+            memory: 256Mi
           limits:
             cpu: 200m
-            memory: 128Mi
+            memory: 512Mi
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: emailservice
+  namespace: hipster
 spec:
   type: ClusterIP
   selector:

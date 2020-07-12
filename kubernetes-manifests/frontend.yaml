@@ -16,6 +16,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
+  namespace: hipster
 spec:
   selector:
     matchLabels:
@@ -29,25 +30,25 @@ spec:
     spec:
       containers:
         - name: server
-          image: frontend
+          image: registry.cn-shenzhen.aliyuncs.com/trainticket/hipster-frontend:v0.2.0
           ports:
           - containerPort: 8080
-          readinessProbe:
-            initialDelaySeconds: 10
-            httpGet:
-              path: "/_healthz"
-              port: 8080
-              httpHeaders:
-              - name: "Cookie"
-                value: "shop_session-id=x-readiness-probe"
-          livenessProbe:
-            initialDelaySeconds: 10
-            httpGet:
-              path: "/_healthz"
-              port: 8080
-              httpHeaders:
-              - name: "Cookie"
-                value: "shop_session-id=x-liveness-probe"
+          #readinessProbe:
+          #  initialDelaySeconds: 10
+          #  httpGet:
+          #    path: "/_healthz"
+          #    port: 8080
+          #    httpHeaders:
+          #    - name: "Cookie"
+          #      value: "shop_session-id=x-readiness-probe"
+          #livenessProbe:
+          #  initialDelaySeconds: 10
+          #  httpGet:
+          #    path: "/_healthz"
+          #    port: 8080
+          #    httpHeaders:
+          #    - name: "Cookie"
+          #      value: "shop_session-id=x-liveness-probe"
           env:
           - name: PORT
             value: "8080"
@@ -69,10 +70,10 @@ spec:
             value: "gcp"
           # - name: DISABLE_TRACING
           #   value: "1"
-          # - name: DISABLE_PROFILER
-          #   value: "1"
-          # - name: JAEGER_SERVICE_ADDR
-          #   value: "jaeger-collector:14268"
+          - name: DISABLE_PROFILER
+            value: "1"
+          - name: JAEGER_SERVICE_ADDR
+            value: "10.68.94.73:14268"
           resources:
             requests:
               cpu: 100m
@@ -85,6 +86,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: frontend
+  namespace: hipster
 spec:
   type: ClusterIP
   selector:
@@ -98,11 +100,13 @@ apiVersion: v1
 kind: Service
 metadata:
   name: frontend-external
+  namespace: hipster
 spec:
-  type: LoadBalancer
+  type: NodePort #LoadBalancer
   selector:
     app: frontend
   ports:
   - name: http
     port: 80
+    nodePort: 12345
     targetPort: 8080
