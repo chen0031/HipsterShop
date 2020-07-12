@@ -32,7 +32,8 @@ from grpc_health.v1 import health_pb2_grpc
 from opencensus.ext.grpc import server_interceptor
 from opencensus.common.transports.async_ import AsyncTransport
 from opencensus.trace.samplers import AlwaysOnSampler
-from opencensus.ext.zipkin.trace_exporter import ZipkinExporter
+#from opencensus.ext.zipkin.trace_exporter import ZipkinExporter
+from opencensus.ext.jaeger.trace_exporter import JaegerExporter
 from opencensus.trace import tracer as tracer_module
 
 # import googleclouddebugger
@@ -179,26 +180,33 @@ if __name__ == '__main__':
   except KeyError:
       logger.info("Profiler disabled.")
 
+
   # Tracing
-  try:
-    if "DISABLE_TRACING" in os.environ:
-      raise KeyError()
-    else:
-      logger.info("Tracing enabled.")
-      sampler = AlwaysOnSampler()
-      exporter=ZipkinExporter(
+  logger.info("Tracing enabled.")
+  sampler = AlwaysOnSampler()
+  exporter=JaegerExporter(
                 service_name='emailservice',
                 host_name=os.environ.get('JAEGER_HOST'),
                 port=os.environ.get('JAEGER_PORT'),
                 ransport=AsyncTransport,
-      )
-      tracer = tracer_module.Tracer(exporter)
+  )
+  tracer = tracer_module.Tracer(exporter)
+  tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(sampler, exporter)
+  logger.info(tracer)
+  logger.info(tracer_interceptor)
+
+  #try:
+  #  if "DISABLE_TRACING" in os.environ:
+  #    raise KeyError()
+  #  else:
+  #    logger.info("Tracing enabled.")
+  #    sampler = AlwaysOnSampler()
       #exporter = stackdriver_exporter.StackdriverExporter(
       #  project_id=os.environ.get('GCP_PROJECT_ID'),
       #  transport=AsyncTransport)
-      tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(sampler, exporter)
-  except (KeyError, DefaultCredentialsError):
-      logger.info("Tracing disabled.")
-      tracer_interceptor = server_interceptor.OpenCensusServerInterceptor()
+      #tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(sampler, exporter)
+  #except (KeyError, DefaultCredentialsError):
+      #logger.info("Tracing disabled.")
+      #tracer_interceptor = server_interceptor.OpenCensusServerInterceptor()
 
   start(dummy_mode = True)
