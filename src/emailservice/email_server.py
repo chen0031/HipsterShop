@@ -188,7 +188,7 @@ if __name__ == '__main__':
                 service_name='emailservice',
                 host_name=os.environ.get('JAEGER_HOST'),
                 port=os.environ.get('JAEGER_PORT'),
-                ransport=AsyncTransport,
+                transport=AsyncTransport,
   )
   tracer = tracer_module.Tracer(exporter)
   tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(sampler, exporter)
