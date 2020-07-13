@@ -26,15 +26,25 @@ from opentelemetry import trace
 from opentelemetry.ext.grpc import client_interceptor
 from opentelemetry.ext.grpc.grpcext import intercept_channel
 from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import (
-    ConsoleSpanExporter,
-    SimpleExportSpanProcessor,
-)
+from opentelemetry.sdk.trace.export import BatchExportSpanProcessor
+from opentelemetry.ext.jaeger import JaegerSpanExporter
 
 trace.set_tracer_provider(TracerProvider())
-trace.get_tracer_provider().add_span_processor(
-    SimpleExportSpanProcessor(ConsoleSpanExporter())
+exporter = JaegerSpanExporter(
+    service_name="emailservice",
+    # configure agent
+    #agent_host_name="localhost",
+    #agent_port=6831,
+    # optional: configure also collector
+    collector_host_name=os.environ.get('JAEGER_HOST'),
+    collector_port=os.environ.get('JAEGER_PORT'),
+    collector_endpoint="/api/traces?format=jaeger.thrift",
+    # username=xxxx, # optional
+    # password=xxxx, # optional
 )
+span_processor = BatchExportSpanProcessor(exporter)
+trace.get_tracer_provider().add_span_processor(span_processor)
+
 
 def send_confirmation_email(email, order):
   channel = grpc.insecure_channel('0.0.0.0:8080')
