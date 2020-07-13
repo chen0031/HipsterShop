@@ -37,8 +37,6 @@ from opentelemetry.sdk.trace.export import BatchExportSpanProcessor
 from opentelemetry.ext.jaeger import JaegerSpanExporter
 
 trace.set_tracer_provider(TracerProvider())
-tracer = trace.get_tracer(__name__)
-
 exporter = JaegerSpanExporter(
     service_name="emailservice",
     # configure agent
@@ -53,6 +51,7 @@ exporter = JaegerSpanExporter(
 )
 span_processor = BatchExportSpanProcessor(exporter)
 trace.get_tracer_provider().add_span_processor(span_processor)
+tracer = trace.get_tracer(__name__)
 
 from logger import getJSONLogger
 logger = getJSONLogger('emailservice-server')
@@ -130,7 +129,7 @@ class HealthCheck():
 def start(dummy_mode):
   #server = grpc.server(futures.ThreadPoolExecutor(max_workers=10),interceptors=(tracer_interceptor,))
   server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-  server = intercept_server(server, server_interceptor())
+  server = intercept_server(server, server_interceptor(tracer))
 
   service = None
   if dummy_mode:
