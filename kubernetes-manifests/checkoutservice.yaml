@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: server
-          image: registry.cn-shenzhen.aliyuncs.com/trainticket/hipster-checkoutservice:v0.2.0
+          image: registry.cn-hangzhou.aliyuncs.com/pnut/testbed/checkoutservice
           ports:
           - containerPort: 5050
           #readinessProbe:
@@ -59,7 +59,7 @@ spec:
           - name: DISABLE_PROFILER
             value: "1"
           - name: JAEGER_SERVICE_ADDR
-            value: "10.68.94.73:14268"
+            value: "jaeger-collector:14268"
           resources:
             requests:
               cpu: 100m

@@ -29,14 +29,14 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: registry.cn-shenzhen.aliyuncs.com/trainticket/hipster-paymentservice:testbedv4
+        image: registry.cn-hangzhou.aliyuncs.com/pnut/testbed/paymentservice
         ports:
         - containerPort: 50051
         env:
         - name: PORT
           value: "50051"
         - name: ZIPKIN_COLLECTOR_URL
-          value: "http://10.68.94.73:9411/api/v2/spans"
+          value: "http://jaeger-collector:9411/api/v2/spans"
         #readinessProbe:
         #  exec:
         #    command: ["/bin/grpc_health_probe", "-addr=:50051"]

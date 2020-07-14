@@ -29,7 +29,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: registry.cn-shenzhen.aliyuncs.com/trainticket/hipster-adservice:v0.2.0
+        image: registry.cn-hangzhou.aliyuncs.com/pnut/testbed/adservice
         ports:
         - containerPort: 9555
         env:
@@ -40,7 +40,7 @@ spec:
         # - name: DISABLE_TRACING
         #   value: "1"
         - name: JAEGER_SERVICE_ADDR
-          value: "10.68.94.73:14268"
+          value: "jaeger-collector:14268"
         resources:
           requests:
             cpu: 200m

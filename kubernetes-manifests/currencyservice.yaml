@@ -29,7 +29,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: registry.cn-shenzhen.aliyuncs.com/trainticket/hipster-currencyservice:testbedv3
+        image: registry.cn-hangzhou.aliyuncs.com/pnut/testbed/currencyservice
         ports:
         - name: grpc
           containerPort: 7000
@@ -37,7 +37,7 @@ spec:
         - name: PORT
           value: "7000"
         - name: ZIPKIN_COLLECTOR_URL
-          value: "http://10.68.94.73:9411/api/v2/spans"
+          value: "http://jaeger-collector:9411/api/v2/spans"
         #readinessProbe:
         #  exec:
         #    command: ["/bin/grpc_health_probe", "-addr=:7000"]

@@ -29,7 +29,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: registry.cn-shenzhen.aliyuncs.com/trainticket/hipster-cartservice:testbedv2
+        image: registry.cn-hangzhou.aliyuncs.com/pnut/testbed/cartservice
         ports:
         - containerPort: 7070
         env:
@@ -40,7 +40,7 @@ spec:
         - name: LISTEN_ADDR
           value: "0.0.0.0"
         - name: JAEGER_SERVICE_ADDR
-          value: "http://10.68.94.73:14268/api/traces"
+          value: "jaeger-collector:14268/api/traces"
         resources:
           requests:
             cpu: 200m
