@@ -1,4 +1,4 @@
-FROM node:8-alpine as base
+FROM node:12-alpine as base
 
 FROM base as builder
 
@@ -29,4 +29,5 @@ COPY . .
 
 EXPOSE 7000
 
-ENTRYPOINT [ "node", "server.js" ]
+# ENTRYPOINT [ "node", "server.js" ]
+CMD [ "node", "server.js" ]
