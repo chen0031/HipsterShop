@@ -1,22 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d3df5f16-dc05-47fd-a523-1dcc6928ddb5" name="Default Changelist" comment="">
+    <list default="true" id="d3df5f16-dc05-47fd-a523-1dcc6928ddb5" name="Default Changelist" comment="Add opencensus code for currency service">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/currencyservice/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/src/currencyservice/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/currencyservice/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/currencyservice/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/recommendationservice/recommendation_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/recommendationservice/recommendation_server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/recommendationservice/requirements.in" beforeDir="false" afterPath="$PROJECT_DIR$/src/recommendationservice/requirements.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/recommendationservice/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/recommendationservice/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" path="C:\Go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="false" />
+    <option name="urls">
+      <list>
+        <option value="file://$PROJECT_DIR$/../../pkg/mod" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1eaRjmUfZWx1KyzOP6r5sdNKNNp" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="GO_FMT" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="configurable.Global.GOPATH.is.expanded" value="true" />
+    <property name="configurable.Module.GOPATH.is.expanded" value="false" />
+    <property name="configurable.Project.GOPATH.is.expanded" value="true" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.sdk.automatically.set" value="true" />
+    <property name="go.tried.to.enable.integration.dep.integrator" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="go.vgo" />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Use jaeger client to trace" />
@@ -28,18 +64,44 @@
     <MESSAGE value="change jaeger exporter to zipkin" />
     <MESSAGE value="Add opentelemetry for email service" />
     <MESSAGE value="update deploy yaml" />
-    <option name="LAST_COMMIT_MESSAGE" value="update deploy yaml" />
+    <MESSAGE value="Add opentelemetry code for currency" />
+    <MESSAGE value="Update deploy yaml about env" />
+    <MESSAGE value="Modify opentelemetry js code" />
+    <MESSAGE value="Modify opentelemetry python code" />
+    <MESSAGE value="Modify email_client opentelemetry code" />
+    <MESSAGE value="Modify opentelemetry python dependency version" />
+    <MESSAGE value="Modify opentelemetry python dependency version from 0.10 to 0.6" />
+    <MESSAGE value="Add opencensus code for payment" />
+    <MESSAGE value="Update the env ZIPKIN_COLLECTOR_URL" />
+    <MESSAGE value="Add opencensus code for currency service" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add opencensus code for currency service" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="-1378" y="102" width="804" height="875" key="CommitChangelistDialog2" timestamp="1594551572009">
+    <state x="-966" y="193" width="804" height="875" key="CommitChangelistDialog2" timestamp="1594698552170">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="-1378" y="102" key="CommitChangelistDialog2/74.0.1846.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1594551572009" />
-    <state x="595" y="102" width="804" height="875" key="CommitChangelistDialog2/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1594547319328" />
-    <state x="-1384" y="272" key="Vcs.Push.Dialog.v2" timestamp="1594551577611">
+    <state x="-1378" y="102" key="CommitChangelistDialog2/74.0.1846.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1594643919171" />
+    <state x="-966" y="193" width="804" height="875" key="CommitChangelistDialog2/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1594698552170" />
+    <state x="884" y="399" key="EnvironmentVariablesDialog" timestamp="1594558009520">
+      <screen x="74" y="0" width="1846" height="1080" />
+    </state>
+    <state x="884" y="399" key="EnvironmentVariablesDialog/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1594558009520" />
+    <state x="777" y="294" key="FileChooserDialogImpl" timestamp="1594558062447">
+      <screen x="74" y="0" width="1846" height="1080" />
+    </state>
+    <state x="777" y="294" key="FileChooserDialogImpl/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1594558062447" />
+    <state x="-1517" y="183" key="SettingsEditor" timestamp="1594558215394">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="-1384" y="272" key="Vcs.Push.Dialog.v2/74.0.1846.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1594551577611" />
-    <state x="589" y="272" key="Vcs.Push.Dialog.v2/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1594547324101" />
+    <state x="-1517" y="183" key="SettingsEditor/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1594558215394" />
+    <state x="589" y="272" key="Vcs.Push.Dialog.v2" timestamp="1594698565309">
+      <screen x="74" y="0" width="1846" height="1080" />
+    </state>
+    <state x="-1384" y="272" key="Vcs.Push.Dialog.v2/74.0.1846.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1594643926267" />
+    <state x="589" y="272" key="Vcs.Push.Dialog.v2/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1594698565309" />
+    <state x="704" y="326" key="git4idea.merge.GitPullDialog" timestamp="1594697928657">
+      <screen x="74" y="0" width="1846" height="1080" />
+    </state>
+    <state x="704" y="326" key="git4idea.merge.GitPullDialog/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1594697928657" />
   </component>
 </project>
