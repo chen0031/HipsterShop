@@ -30,11 +30,12 @@
 //   }
 // });
 const path = require('path');
+const grpc = require('grpc');
 const {logger} = require("@opencensus/core");
 const tracing = require("@opencensus/nodejs");
 const {plugin} = require("@opencensus/instrumentation-grpc");
 const {ZipkinTraceExporter} = require("@opencensus/exporter-zipkin");
-zipkinUrl = process.env.ZIPKIN_COLLECTOR_URL;
+const zipkinUrl = process.env.ZIPKIN_COLLECTOR_URL;
 if (!zipkinUrl || zipkinUrl === "off") {
   console.log("jaeger exporter not initialized");
   return undefined;
