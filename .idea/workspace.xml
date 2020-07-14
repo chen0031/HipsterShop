@@ -2,30 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3e71017d-4e74-4d10-8ba1-f94d2a359ff9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/cartservice.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/cartservice.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cartservice/.dockerignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cartservice/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cartservice/CartServiceImpl.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cartservice/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cartservice/HealthImpl.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cartservice/Program.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cartservice/cartservice.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cartservice/cartstore/LocalCartStore.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cartservice/cartstore/RedisCartStore.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cartservice/genproto.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cartservice/genproto.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cartservice/grpc_generated/Demo.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cartservice/grpc_generated/DemoGrpc.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cartservice/interfaces/ICartStore.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cartservice/scripts/build_image.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cartservice/scripts/docker_setup.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cartservice/scripts/run_redis_emulator_windows.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cartservice/tests/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cartservice/tests/CartServiceTests.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cartservice/tests/cartservice.tests.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cartservice/tests/cartservice.tests.csproj.user" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,6 +116,7 @@
       <workItem from="1594815732198" duration="715000" />
       <workItem from="1594882926675" duration="326000" />
       <workItem from="1594883268026" duration="1216000" />
+      <workItem from="1594885878434" duration="304000" />
     </task>
     <servers />
   </component>
@@ -183,11 +161,12 @@
     </state>
     <state x="-1459" y="190" key="SettingsEditor/-1920.23.1920.1057/0.23.1680.981@-1920.23.1920.1057" timestamp="1594293538284" />
     <state x="403" y="178" key="SettingsEditor/0.23.1680.981@0.23.1680.981" timestamp="1594885865586" />
-    <state x="-1283" y="384" key="com.intellij.ide.util.TipDialog" timestamp="1594883273293">
-      <screen x="-1920" y="23" width="1920" height="1057" />
+    <state x="557" y="358" key="com.intellij.ide.util.TipDialog" timestamp="1594885879347">
+      <screen x="0" y="23" width="1680" height="981" />
     </state>
     <state x="-1283" y="384" key="com.intellij.ide.util.TipDialog/-1920.23.1920.1057/0.23.1680.981@-1920.23.1920.1057" timestamp="1594883273293" />
     <state x="557" y="358" key="com.intellij.ide.util.TipDialog/-1920.23.1920.1057/0.23.1680.981@0.23.1680.981" timestamp="1594609338192" />
+    <state x="557" y="358" key="com.intellij.ide.util.TipDialog/0.23.1680.981@0.23.1680.981" timestamp="1594885879347" />
     <state x="-1302" y="187" width="683" height="729" key="find.popup" timestamp="1594718749548">
       <screen x="-1920" y="23" width="1920" height="1057" />
     </state>
