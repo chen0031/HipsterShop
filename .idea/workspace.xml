@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3e71017d-4e74-4d10-8ba1-f94d2a359ff9" name="Default Changelist" comment="" />
+    <list default="true" id="3e71017d-4e74-4d10-8ba1-f94d2a359ff9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,6 +28,9 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/loadgenerator" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -105,7 +110,7 @@
       <workItem from="1594346670736" duration="9774000" />
       <workItem from="1594405370870" duration="4110000" />
       <workItem from="1594626808789" duration="1938000" />
-      <workItem from="1594706955920" duration="383000" />
+      <workItem from="1594706955920" duration="2343000" />
     </task>
     <servers />
   </component>
@@ -154,10 +159,10 @@
     </state>
     <state x="-1283" y="384" key="com.intellij.ide.util.TipDialog/-1920.23.1920.1057/0.23.1680.981@-1920.23.1920.1057" timestamp="1594627821673" />
     <state x="557" y="358" key="com.intellij.ide.util.TipDialog/-1920.23.1920.1057/0.23.1680.981@0.23.1680.981" timestamp="1594609338192" />
-    <state x="-1302" y="187" width="683" height="729" key="find.popup" timestamp="1594693068526">
+    <state x="-1302" y="187" width="683" height="729" key="find.popup" timestamp="1594718749548">
       <screen x="-1920" y="23" width="1920" height="1057" />
     </state>
-    <state x="-1302" y="187" width="683" height="729" key="find.popup/-1920.23.1920.1057/0.23.1680.981@-1920.23.1920.1057" timestamp="1594693068526" />
+    <state x="-1302" y="187" width="683" height="729" key="find.popup/-1920.23.1920.1057/0.23.1680.981@-1920.23.1920.1057" timestamp="1594718749548" />
     <state x="541" y="175" width="683" height="677" key="find.popup/-1920.23.1920.1057/0.23.1680.981@0.23.1680.981" timestamp="1594609444989" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
