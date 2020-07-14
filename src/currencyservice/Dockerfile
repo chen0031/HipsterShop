@@ -12,13 +12,7 @@ RUN apk add --update --no-cache \
 WORKDIR /usr/src/app
 
 COPY package*.json ./
-RUN npm install \
-        @opentelemetry/api \
-        @opentelemetry/core \
-        @opentelemetry/node \
-        @opentelemetry/tracing \
-        @opentelemetry/exporter-jaeger \
-        @opentelemetry/plugin-grpc 
+
 RUN npm install --only=production
 
 FROM base

@@ -14,73 +14,51 @@
  * limitations under the License.
  */
 
-// if(process.env.DISABLE_PROFILER) {
-//   console.log("Profiler disabled.")
-// }
-// else {
-//   console.log("Profiler enabled.")
-//   require('@google-cloud/profiler').start({
-//     serviceContext: {
-//       service: 'currencyservice',
-//       version: '1.0.0'
-//     }
-//   });
-// }
-//
-//
-// if(process.env.DISABLE_TRACING) {
-//   console.log("Tracing disabled.")
-// }
-// else {
-//   console.log("Tracing enabled.")
-//   require('@google-cloud/trace-agent').start();
-// }
-//
-// if(process.env.DISABLE_DEBUGGER) {
-//   console.log("Debugger disabled.")
-// }
-// else {
-//   console.log("Debugger enabled.")
-//   require('@google-cloud/debug-agent').start({
-//     serviceContext: {
-//       service: 'currencyservice',
-//       version: 'VERSION'
-//     }
-//   });
-// }
 
-// const { NodeTracerProvider } = require("@opentelemetry/node");
-// const { BatchSpanProcessor } = require("@opentelemetry/tracing");
-// const { JaegerExporter } = require("@opentelemetry/exporter-jaeger");
-// const { B3Propagator } = require("@opentelemetry/core");
-//
-// const tracerProvider = new NodeTracerProvider();
-
-/**
- * The SimpleSpanProcessor does no batching and exports spans
- * immediately when they end. For most production use cases,
- * OpenTelemetry recommends use of the BatchSpanProcessor.
- */
-// tracerProvider.addSpanProcessor(
-//     new BatchSpanProcessor(
-//         new JaegerExporter({
-//           serviceName: 'currencyservice'
-//         })
-//     )
-// );
-
-// tracerProvider.register({
-//   // Use B3 Propagation
-//   propagator: new B3Propagator(),
-//
-//   // Skip registering a default context manager
-//   contextManager: null,
-// });
-const tracer = require('./tracing')('currencyservice')
 const path = require('path');
 const grpc = require('grpc');
 const pino = require('pino');
 const protoLoader = require('@grpc/proto-loader');
+
+// Tracing code
+const tracing = require("@opencensus/nodejs");
+const {plugin} = require("@opencensus/instrumentation-grpc");
+const {ZipkinTraceExporter} = require("@opencensus/exporter-zipkin");
+const zipkinUrl = process.env.ZIPKIN_COLLECTOR_URL;
+if (!zipkinUrl || zipkinUrl === "off") {
+  console.log("jaeger exporter not initialized");
+  return undefined;
+}
+
+const exporter = new ZipkinTraceExporter({
+  url: zipkinUrl,
+  serviceName: "currencyservice",
+  tags: [
+    {
+      key: "service",
+      value: "currencyservice",
+    },
+  ],
+});
+
+tracing.registerExporter(exporter).start({
+  samplingRate: 1,
+  logLevel: 1,
+});
+
+const basedir = path.dirname(require.resolve("grpc"));
+const version = require(path.join(basedir, "package.json")).version;
+
+// Enables GRPC plugin: Method that enables the instrumentation patch.
+plugin.enable(
+    grpc,
+    tracing.tracer,
+    version,
+    /** plugin options */ {},
+    basedir
+);
+
+console.log("jaeger tracing initialized");
 
 const MAIN_PROTO_PATH = path.join(__dirname, './proto/demo.proto');
 const HEALTH_PROTO_PATH = path.join(__dirname, './proto/grpc/health/v1/health.proto');
@@ -139,17 +117,9 @@ function _carry (amount) {
  */
 function getSupportedCurrencies (call, callback) {
   logger.info('Getting supported currencies...');
-  const currentSpan = tracer.getCurrentSpan();
-  const span = tracer.startSpan('server.js:getSupportedCurrencies', {
-    parent: currentSpan,
-    kind: 1, // server
-    attributes: { key: 'value' },
-  });
-  span.addEvent('invoking getSupportedCurrencies');
   _getCurrencyData((data) => {
     callback(null, {currency_codes: Object.keys(data)});
   });
-  span.end();
 }
 
 /**
