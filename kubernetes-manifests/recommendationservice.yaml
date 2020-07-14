@@ -45,6 +45,10 @@ spec:
           value: "8080"
         - name: PRODUCT_CATALOG_SERVICE_ADDR
           value: "productcatalogservice:3550"
+        - name: JAEGER_AGENT_HOST
+          value: "jaeger"
+        - name: JAEGER_AGENT_PORT
+          value: "6831"
         - name: JAEGER_HOST
           value: "jaeger-collector"
         - name: ZIPKIN_PORT
