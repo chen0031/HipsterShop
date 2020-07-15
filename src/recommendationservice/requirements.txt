@@ -37,3 +37,4 @@ urllib3==1.24.2           # via requests
 opencensus-ext-grpc==0.7.1
 opencensus-ext-zipkin==0.2.2
 opencensus==0.7.1
+opencensus-ext-jaeger

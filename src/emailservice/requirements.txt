@@ -37,3 +37,6 @@ opentelemetry-ext-jaeger==0.6b0
 opentelemetry-ext-grpc==0.6b0
 grpcio-tools==1.27.2
 thrift==0.13.0
+opencensus-ext-grpc==0.7.1
+opencensus-ext-zipkin==0.2.2
+opencensus==0.7.1
