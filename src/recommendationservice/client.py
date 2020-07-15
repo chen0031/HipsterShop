@@ -20,9 +20,11 @@ import demo_pb2
 import demo_pb2_grpc
 
 from opencensus.trace.tracer import Tracer
-from opencensus.trace.exporters import stackdriver_exporter
+from opencensus.ext.jaeger.trace_exporter import JaegerExporter
+
 from opencensus.trace.ext.grpc import client_interceptor
 
+from opencensus.ext.zipkin.trace_exporter import ZipkinExporter
 from logger import getJSONLogger
 logger = getJSONLogger('recommendationservice-server')
 
@@ -34,10 +36,18 @@ if __name__ == "__main__":
         port = "8080"
 
     try:
-        exporter = stackdriver_exporter.StackdriverExporter()
+        #exporter = JaegerExporter(
+        #    service_name="recommendationservice",
+        #    host_name=os.environ.get('JAEGER_AGENT_HOST', 'jaeger'),
+        #    agent_port=int(os.environ.get('JAEGER_AGENT_PORT', '6831')),)
+        exporter = ZipkinExporter(
+            service_name='recommendationservice',
+            host_name=os.environ.get('JAEGER_HOST', 'jaeger-collector'),
+            port=int(os.environ.get('ZIPKIN_PORT', '9411')))
         tracer = Tracer(exporter=exporter)
-        tracer_interceptor = client_interceptor.OpenCensusClientInterceptor(tracer, host_port='localhost:'+port)
+        tracer_interceptor = client_interceptor.OpenCensusClientInterceptor(tracer, host_port='localhost:' + port)
     except:
+        logger.error('trace set error')
         tracer_interceptor = client_interceptor.OpenCensusClientInterceptor()
 
     # set up server stub
@@ -49,3 +59,4 @@ if __name__ == "__main__":
     # make call to server
     response = stub.ListRecommendations(request)
     logger.info(response)
+

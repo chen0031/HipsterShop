@@ -34,6 +34,9 @@ from opencensus.ext.grpc import server_interceptor
 from opencensus.trace import samplers
 from opencensus.ext.zipkin.trace_exporter import ZipkinExporter
 
+from opencensus.ext.jaeger.trace_exporter import JaegerExporter
+
+
 import demo_pb2
 import demo_pb2_grpc
 from grpc_health.v1 import health_pb2
@@ -135,11 +138,16 @@ if __name__ == "__main__":
     #except KeyError:
     #    logger.info("Debugger disabled.")
     sampler = samplers.AlwaysOnSampler()
-    exporter=ZipkinExporter(
-        service_name='recommendationservice',
-        host_name=os.environ.get('JAEGER_HOST'),
-        port=os.environ.get('ZIPKIN_PORT'),
-    )
+    exporter = ZipkinExporter(
+         service_name='recommendationservice',
+         host_name=os.environ.get('JAEGER_HOST', 'jaeger-collector'),
+         port=int(os.environ.get('ZIPKIN_PORT', '9411'))
+     )
+    #exporter = JaegerExporter(
+    #    service_name="recommendationservice",
+    #    host_name=os.environ.get('JAEGER_AGENT_HOST', 'jaeger'),
+    #    agent_port=int(os.environ.get('JAEGER_AGENT_PORT', 6831)),
+    #)
     logger.info(exporter)
     tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(
             sampler, exporter)
@@ -173,3 +181,4 @@ if __name__ == "__main__":
             time.sleep(10000)
     except KeyboardInterrupt:
             server.stop(0)
+
