@@ -22,33 +22,25 @@ import demo_pb2_grpc
 from logger import getJSONLogger
 logger = getJSONLogger('emailservice-client')
 
-from opentelemetry import trace
-from opentelemetry.ext.grpc import client_interceptor
-from opentelemetry.ext.grpc.grpcext import intercept_channel
-from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import BatchExportSpanProcessor
-from opentelemetry.ext.jaeger import JaegerSpanExporter
+from opencensus.trace.tracer import Tracer
+from opencensus.trace.exporters import stackdriver_exporter
+from opencensus.trace.ext.grpc import client_interceptor
+from opencensus.ext.zipkin.trace_exporter import ZipkinExporter
 
-trace.set_tracer_provider(TracerProvider())
-exporter = JaegerSpanExporter(
-    service_name="emailservice",
-    # configure agent
-    #agent_host_name="localhost",
-    #agent_port=6831,
-    # optional: configure also collector
-    collector_host_name=os.environ.get('JAEGER_HOST'),
-    collector_port=os.environ.get('JAEGER_PORT'),
-    collector_endpoint="/api/traces?format=jaeger.thrift",
-    # username=xxxx, # optional
-    # password=xxxx, # optional
-)
-span_processor = BatchExportSpanProcessor(exporter)
-trace.get_tracer_provider().add_span_processor(span_processor)
-
+try:
+    exporter = ZipkinExporter(
+         service_name='emailservice',
+         host_name=os.environ.get('JAEGER_HOST', 'jaeger-collector'),
+         port=int(os.environ.get('ZIPKIN_PORT', '9411'))
+     )
+    tracer = Tracer(exporter=exporter)
+    tracer_interceptor = client_interceptor.OpenCensusClientInterceptor(tracer, host_port='0.0.0.0:8080')
+except:
+    tracer_interceptor = client_interceptor.OpenCensusClientInterceptor()
 
 def send_confirmation_email(email, order):
   channel = grpc.insecure_channel('0.0.0.0:8080')
-  channel = intercept_channel(channel, client_interceptor())
+  channel = grpc.intercept_channel(channel, tracer_interceptor)
   stub = demo_pb2_grpc.EmailServiceStub(channel)
   try:
     response = stub.SendOrderConfirmation(demo_pb2.SendOrderConfirmationRequest(
