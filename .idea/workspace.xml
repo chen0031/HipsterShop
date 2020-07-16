@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="3e71017d-4e74-4d10-8ba1-f94d2a359ff9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cartservice/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/cartservice/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cartservice/cartservice.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/cartservice/cartservice.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,11 +33,6 @@
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
-<<<<<<< HEAD
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
-=======
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
->>>>>>> f4fe88ba1bea893b888d1496c5f28cb0a84f82fc
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -142,8 +139,12 @@
       <workItem from="1594815732198" duration="715000" />
       <workItem from="1594882926675" duration="326000" />
       <workItem from="1594883268026" duration="1216000" />
+<<<<<<< HEAD
       <workItem from="1594885878434" duration="304000" />
 >>>>>>> f4fe88ba1bea893b888d1496c5f28cb0a84f82fc
+=======
+      <workItem from="1594885878434" duration="1579000" />
+>>>>>>> 7ee37c95d265e3a3b62ee1142a616faaf6dd62c5
     </task>
     <servers />
   </component>

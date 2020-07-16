@@ -160,16 +160,12 @@ namespace cartservice
 
                             var satelliteOptions = new SatelliteOptions(lsHost, lsPort, plaintext);
                             */
-                            var loggerFactory = ; // get Microsoft.Extensions.Logging ILoggerFactory
-                            var serviceName = "cartservice";
+
+                            Configuration config = Configuration.FromEnv();
 
                             var reporter = new LoggingReporter(loggerFactory);
                             var sampler = new ConstSampler(true);
-                            var tracer = new Tracer.Builder(serviceName)
-                                .WithLoggerFactory(loggerFactory)
-                                .WithReporter(reporter)
-                                .WithSampler(sampler)
-                                .Build();
+                            var tracer = config.GetTracer();
 
                             // BEGIN 
                             // Used for GCP Demo
