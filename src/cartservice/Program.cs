@@ -30,6 +30,7 @@ using OpenTracing.Util;
 using Jaeger;
 using Jaeger.Reporters;
 using Jaeger.Samplers;
+using Microsoft.Extensions.Logging;
 
 namespace cartservice
 {
@@ -161,10 +162,12 @@ namespace cartservice
                             var satelliteOptions = new SatelliteOptions(lsHost, lsPort, plaintext);
                             */
 
+                            var loggerFactory = options.GetRequiredService<ILoggerFactory>(); // get Microsoft.Extensions.Logging ILoggerFactory
+
                             Configuration config = Configuration.FromEnv();
 
-                            var reporter = new LoggingReporter(loggerFactory);
-                            var sampler = new ConstSampler(true);
+                            //var reporter = new LoggingReporter(loggerFactory);
+                            //var sampler = new ConstSampler(true);
                             var tracer = config.GetTracer();
 
                             // BEGIN 
