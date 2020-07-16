@@ -22,7 +22,16 @@ RUN apk add --no-cache \
     libgcc \
     libstdc++ \
     libintl \
-    icu
+    icu \
+    openssl \
+    curl \
+    bash
+
+ENV CORECLR_ENABLE_PROFILING=1
+ENV CORECLR_PROFILER={846F5F1C-F9AE-4B07-969E-05C26BC060D8}
+ENV CORECLR_PROFILER_PATH=/opt/datadog/Datadog.Trace.ClrProfiler.Native.so
+
 WORKDIR /app
 COPY --from=builder /cartservice .
+
 ENTRYPOINT ["./cartservice", "start"]

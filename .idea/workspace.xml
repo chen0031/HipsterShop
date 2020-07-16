@@ -1,107 +1,201 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d3df5f16-dc05-47fd-a523-1dcc6928ddb5" name="Default Changelist" comment="Add opencensus code for currency service">
+    <list default="true" id="3e71017d-4e74-4d10-8ba1-f94d2a359ff9" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/recommendationservice/recommendation_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/recommendationservice/recommendation_server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/recommendationservice/requirements.in" beforeDir="false" afterPath="$PROJECT_DIR$/src/recommendationservice/requirements.in" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/recommendationservice/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/recommendationservice/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes-manifests/cartservice.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes-manifests/cartservice.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cartservice/.dockerignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cartservice/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cartservice/CartServiceImpl.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cartservice/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cartservice/HealthImpl.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cartservice/Program.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cartservice/cartservice.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cartservice/cartstore/LocalCartStore.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cartservice/cartstore/RedisCartStore.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cartservice/genproto.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cartservice/genproto.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cartservice/grpc_generated/Demo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cartservice/grpc_generated/DemoGrpc.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cartservice/interfaces/ICartStore.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cartservice/scripts/build_image.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cartservice/scripts/docker_setup.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cartservice/scripts/run_redis_emulator_windows.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cartservice/tests/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cartservice/tests/CartServiceTests.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cartservice/tests/cartservice.tests.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cartservice/tests/cartservice.tests.csproj.user" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="JavaScript File" />
-      </list>
-    </option>
-  </component>
-  <component name="GOROOT" path="C:\Go" />
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GoLibraries">
-    <option name="indexEntireGoPath" value="false" />
-    <option name="urls">
-      <list>
-        <option value="file://$PROJECT_DIR$/../../pkg/mod" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectId" id="1eaRjmUfZWx1KyzOP6r5sdNKNNp" />
+  <component name="ProjectId" id="1eRbio1vEbwCMpnqfGYMbfYHWnL" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="GO_FMT" value="true" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="configurable.Global.GOPATH.is.expanded" value="true" />
-    <property name="configurable.Module.GOPATH.is.expanded" value="false" />
-    <property name="configurable.Project.GOPATH.is.expanded" value="true" />
-    <property name="go.import.settings.migrated" value="true" />
-    <property name="go.sdk.automatically.set" value="true" />
-    <property name="go.tried.to.enable.integration.dep.integrator" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="go.vgo" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/loadgenerator" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/loadgenerator" />
+      <recent name="$PROJECT_DIR$/src/recommendationservice" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Docker.recommendationservice/Dockerfile">
+    <configuration name="recommendation_server" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="HipsterShop" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/recommendationservice" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/recommendationservice/recommendation_server.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="recommendationservice/Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="buildCliOptions" value="" />
+          <option name="command" value="" />
+          <option name="containerName" value="" />
+          <option name="entrypoint" value="" />
+          <option name="imageTag" value="recommendationservice" />
+          <option name="commandLineOptions" value="" />
+          <option name="sourceFilePath" value="src/recommendationservice/Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.recommendationservice/Dockerfile" />
+        <item itemvalue="Python.recommendation_server" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3e71017d-4e74-4d10-8ba1-f94d2a359ff9" name="Default Changelist" comment="" />
+      <created>1594287481731</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1594287481731</updated>
+      <workItem from="1594287484107" duration="1865000" />
+      <workItem from="1594289417821" duration="5427000" />
+      <workItem from="1594346670736" duration="9774000" />
+      <workItem from="1594405370870" duration="4110000" />
+      <workItem from="1594626808789" duration="1938000" />
+      <workItem from="1594706955920" duration="3203000" />
+      <workItem from="1594720138698" duration="9373000" />
+      <workItem from="1594780902932" duration="1728000" />
+      <workItem from="1594815732198" duration="715000" />
+      <workItem from="1594882926675" duration="326000" />
+      <workItem from="1594883268026" duration="1216000" />
+    </task>
+    <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Use jaeger client to trace" />
-    <MESSAGE value="Add opentelemetry code for email service" />
-    <MESSAGE value="update jaeger address" />
-    <MESSAGE value="add zipkin exporter" />
-    <MESSAGE value="change zipkin exporter to jaeger exporter" />
-    <MESSAGE value="change zipkin exporter to jaeger" />
-    <MESSAGE value="change jaeger exporter to zipkin" />
-    <MESSAGE value="Add opentelemetry for email service" />
-    <MESSAGE value="update deploy yaml" />
-    <MESSAGE value="Add opentelemetry code for currency" />
-    <MESSAGE value="Update deploy yaml about env" />
-    <MESSAGE value="Modify opentelemetry js code" />
-    <MESSAGE value="Modify opentelemetry python code" />
-    <MESSAGE value="Modify email_client opentelemetry code" />
-    <MESSAGE value="Modify opentelemetry python dependency version" />
-    <MESSAGE value="Modify opentelemetry python dependency version from 0.10 to 0.6" />
-    <MESSAGE value="Add opencensus code for payment" />
-    <MESSAGE value="Update the env ZIPKIN_COLLECTOR_URL" />
-    <MESSAGE value="Add opencensus code for currency service" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add opencensus code for currency service" />
+    <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="-966" y="193" width="804" height="875" key="CommitChangelistDialog2" timestamp="1594698552170">
-      <screen x="-1920" y="0" width="1920" height="1080" />
+    <state x="-1193" y="279" key="#Docker2" timestamp="1594293447724">
+      <screen x="-1920" y="23" width="1920" height="1057" />
     </state>
-    <state x="-1378" y="102" key="CommitChangelistDialog2/74.0.1846.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1594643919171" />
-    <state x="-966" y="193" width="804" height="875" key="CommitChangelistDialog2/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1594698552170" />
-    <state x="884" y="399" key="EnvironmentVariablesDialog" timestamp="1594558009520">
-      <screen x="74" y="0" width="1846" height="1080" />
+    <state x="-1193" y="279" key="#Docker2/-1920.23.1920.1057/0.23.1680.981@-1920.23.1920.1057" timestamp="1594293447724" />
+    <state x="-1663" y="221" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1594289491088">
+      <screen x="-1920" y="23" width="1920" height="1057" />
     </state>
-    <state x="884" y="399" key="EnvironmentVariablesDialog/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1594558009520" />
-    <state x="777" y="294" key="FileChooserDialogImpl" timestamp="1594558062447">
-      <screen x="74" y="0" width="1846" height="1080" />
+    <state x="-1663" y="221" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.23.1920.1057/0.23.1680.981@-1920.23.1920.1057" timestamp="1594289491088" />
+    <state x="-1250" y="361" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1594367859901">
+      <screen x="-1920" y="23" width="1920" height="1057" />
     </state>
-    <state x="777" y="294" key="FileChooserDialogImpl/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1594558062447" />
-    <state x="-1517" y="183" key="SettingsEditor" timestamp="1594558215394">
-      <screen x="-1920" y="0" width="1920" height="1080" />
+    <state x="-1250" y="361" key="#com.intellij.fileTypes.FileTypeChooser/-1920.23.1920.1057/0.23.1680.981@-1920.23.1920.1057" timestamp="1594367859900" />
+    <state x="-1265" y="116" key="#recommendationservice/Dockerfile" timestamp="1594293480484">
+      <screen x="-1920" y="23" width="1920" height="1057" />
     </state>
-    <state x="-1517" y="183" key="SettingsEditor/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1594558215394" />
-    <state x="589" y="272" key="Vcs.Push.Dialog.v2" timestamp="1594698565309">
-      <screen x="74" y="0" width="1846" height="1080" />
+    <state x="-1265" y="116" key="#recommendationservice/Dockerfile/-1920.23.1920.1057/0.23.1680.981@-1920.23.1920.1057" timestamp="1594293480484" />
+    <state width="1878" height="353" key="GridCell.Tab.0.bottom" timestamp="1594611578459">
+      <screen x="-1920" y="23" width="1920" height="1057" />
     </state>
-    <state x="-1384" y="272" key="Vcs.Push.Dialog.v2/74.0.1846.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1594643926267" />
-    <state x="589" y="272" key="Vcs.Push.Dialog.v2/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1594698565309" />
-    <state x="704" y="326" key="git4idea.merge.GitPullDialog" timestamp="1594697928657">
-      <screen x="74" y="0" width="1846" height="1080" />
+    <state width="1878" height="353" key="GridCell.Tab.0.bottom/-1920.23.1920.1057/0.23.1680.981@-1920.23.1920.1057" timestamp="1594611578459" />
+    <state width="1878" height="353" key="GridCell.Tab.0.center" timestamp="1594611578458">
+      <screen x="-1920" y="23" width="1920" height="1057" />
     </state>
-    <state x="704" y="326" key="git4idea.merge.GitPullDialog/74.0.1846.1080/-1920.0.1920.1080@74.0.1846.1080" timestamp="1594697928657" />
+    <state width="1878" height="353" key="GridCell.Tab.0.center/-1920.23.1920.1057/0.23.1680.981@-1920.23.1920.1057" timestamp="1594611578458" />
+    <state width="1878" height="353" key="GridCell.Tab.0.left" timestamp="1594611578458">
+      <screen x="-1920" y="23" width="1920" height="1057" />
+    </state>
+    <state width="1878" height="353" key="GridCell.Tab.0.left/-1920.23.1920.1057/0.23.1680.981@-1920.23.1920.1057" timestamp="1594611578458" />
+    <state width="1878" height="353" key="GridCell.Tab.0.right" timestamp="1594611578458">
+      <screen x="-1920" y="23" width="1920" height="1057" />
+    </state>
+    <state width="1878" height="353" key="GridCell.Tab.0.right/-1920.23.1920.1057/0.23.1680.981@-1920.23.1920.1057" timestamp="1594611578458" />
+    <state x="403" y="178" key="SettingsEditor" timestamp="1594885865586">
+      <screen x="0" y="23" width="1680" height="981" />
+    </state>
+    <state x="-1459" y="190" key="SettingsEditor/-1920.23.1920.1057/0.23.1680.981@-1920.23.1920.1057" timestamp="1594293538284" />
+    <state x="403" y="178" key="SettingsEditor/0.23.1680.981@0.23.1680.981" timestamp="1594885865586" />
+    <state x="-1283" y="384" key="com.intellij.ide.util.TipDialog" timestamp="1594883273293">
+      <screen x="-1920" y="23" width="1920" height="1057" />
+    </state>
+    <state x="-1283" y="384" key="com.intellij.ide.util.TipDialog/-1920.23.1920.1057/0.23.1680.981@-1920.23.1920.1057" timestamp="1594883273293" />
+    <state x="557" y="358" key="com.intellij.ide.util.TipDialog/-1920.23.1920.1057/0.23.1680.981@0.23.1680.981" timestamp="1594609338192" />
+    <state x="-1302" y="187" width="683" height="729" key="find.popup" timestamp="1594718749548">
+      <screen x="-1920" y="23" width="1920" height="1057" />
+    </state>
+    <state x="-1302" y="187" width="683" height="729" key="find.popup/-1920.23.1920.1057/0.23.1680.981@-1920.23.1920.1057" timestamp="1594718749548" />
+    <state x="541" y="175" width="683" height="677" key="find.popup/-1920.23.1920.1057/0.23.1680.981@0.23.1680.981" timestamp="1594609444989" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/HipsterShop$recommendation_server.coverage" NAME="recommendation_server Coverage Results" MODIFIED="1594610460014" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/recommendationservice" />
+    <SUITE FILE_PATH="coverage/HipsterShop$client.coverage" NAME="client Coverage Results" MODIFIED="1594610653724" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/recommendationservice" />
   </component>
 </project>

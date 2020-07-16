@@ -12,15 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using cartservice.cartstore;
 using cartservice.interfaces;
+using CartService.Propagation;
 using CommandLine;
 using Grpc.Core;
+using Grpc.Core.Interceptors;
+using LightStep;
 using Microsoft.Extensions.Configuration;
+using OpenTracing.Contrib.Grpc.Interceptors;
+using OpenTracing.Util;
+using Jaeger;
+using Jaeger.Reporters;
+using Jaeger.Samplers;
 
 namespace cartservice
 {
@@ -29,6 +38,10 @@ namespace cartservice
         const string CART_SERVICE_ADDRESS = "LISTEN_ADDR";
         const string REDIS_ADDRESS = "REDIS_ADDR";
         const string CART_SERVICE_PORT = "PORT";
+        const string LIGHTSTEP_ACCESS_TOKEN = "LIGHTSTEP_ACCESS_TOKEN";
+        const string LIGHTSTEP_HOST = "LIGHTSTEP_HOST";
+        const string LIGHTSTEP_PORT = "LIGHTSTEP_PORT";
+        const string LIGHTSTEP_PLAINTEXT = "LIGHTSTEP_PLAINTEXT";
 
         [Verb("start", HelpText = "Starts the server listening on provided port")]
         class ServerOptions
@@ -53,16 +66,19 @@ namespace cartservice
                 {
                     await cartStore.InitializeAsync();
 
+                    // setup grpc interceptor
+                    var tracingInterceptor = new ServerTracingInterceptor(GlobalTracer.Instance);
+
                     Console.WriteLine($"Trying to start a grpc server at  {host}:{port}");
                     Server server = new Server
                     {
                         Services =
                         {
                             // Cart Service Endpoint
-                             Hipstershop.CartService.BindService(new CartServiceImpl(cartStore)),
+                             Hipstershop.CartService.BindService(new CartServiceImpl(cartStore)).Intercept(tracingInterceptor),
 
                              // Health Endpoint
-                             Grpc.Health.V1.Health.BindService(new HealthImpl(cartStore))
+                             Grpc.Health.V1.Health.BindService(new HealthImpl(cartStore)).Intercept(tracingInterceptor),
                         },
                         Ports = { new ServerPort(host, port, ServerCredentials.Insecure) }
                     };
@@ -73,7 +89,7 @@ namespace cartservice
                     Console.WriteLine("Initialization completed");
 
                     // Keep the server up and running
-                    while(true)
+                    while (true)
                     {
                         Thread.Sleep(TimeSpan.FromMinutes(10));
                     }
@@ -132,6 +148,50 @@ namespace cartservice
                                     port = int.Parse(portStr);
                                 }
                             }
+
+                            // Setup LightStep Tracer
+                            Console.WriteLine($"Reading Lightstep Access Token {LIGHTSTEP_ACCESS_TOKEN} environment variable");
+                            /*
+                            string serviceName = "cartservice";
+                            string accessToken = Environment.GetEnvironmentVariable(LIGHTSTEP_ACCESS_TOKEN);
+                            string lsHost = Environment.GetEnvironmentVariable(LIGHTSTEP_HOST);
+                            int lsPort = Int32.Parse(Environment.GetEnvironmentVariable(LIGHTSTEP_PORT));
+                            bool plaintext = (Environment.GetEnvironmentVariable(LIGHTSTEP_PLAINTEXT) == "true");
+
+                            var satelliteOptions = new SatelliteOptions(lsHost, lsPort, plaintext);
+                            */
+                            var loggerFactory = ; // get Microsoft.Extensions.Logging ILoggerFactory
+                            var serviceName = "cartservice";
+
+                            var reporter = new LoggingReporter(loggerFactory);
+                            var sampler = new ConstSampler(true);
+                            var tracer = new Tracer.Builder(serviceName)
+                                .WithLoggerFactory(loggerFactory)
+                                .WithReporter(reporter)
+                                .WithSampler(sampler)
+                                .Build();
+
+                            // BEGIN 
+                            // Used for GCP Demo
+//                            var overrideTags = new Dictionary<string, object>
+//                            {
+//                              { LightStepConstants.ComponentNameKey, serviceName },
+//                              {"service.version", RedisCartStore.updateUserProfileValue ? RedisCartStore.UnhealthyVersion : RedisCartStore.HealthyVersion},
+//                              {"cartservice.identity", "f738e221f8"},
+//                              {"lightstep.hostname", serviceName + "-0"},
+//                            };
+//                            // END
+//
+//                            var tracerOptions = new Options(accessToken).
+//                                                    WithSatellite(satelliteOptions).
+//                                                    WithTags(overrideTags);
+//                            var lightStepTracer = new LightStep.Tracer(
+//                                    tracerOptions,
+//                                    new LightStepSpanRecorder(),
+//                                    new B3Propagator()
+//                            );
+
+                            GlobalTracer.Register(tracer);
 
                             // Set redis cache host (hostname+port)
                             ICartStore cartStore;
