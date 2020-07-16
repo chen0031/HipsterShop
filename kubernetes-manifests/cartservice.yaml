@@ -52,6 +52,12 @@ spec:
           value: "false"
         - name: HIPSTER_SICK # Used for GCP demo
           value: "false"
+        - name: JAEGER_SERVICE_NAME
+          value: "cartservice"
+        - name: JAEGER_AGENT_HOST
+          value: "jaeger"
+        - name: JAEGER_AGENT_PORT
+          value: "6831"
         resources:
           requests:
             cpu: 200m

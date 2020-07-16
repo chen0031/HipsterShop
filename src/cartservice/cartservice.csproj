@@ -18,6 +18,10 @@
     <PackageReference Include="OpenTracing.Contrib.Grpc" Version="0.2.0" />
     <PackageReference Include="StackExchange.Redis" Version="2.0.601" />
     <PackageReference Include="LightStep.Trace.ClrProfiler.Managed" Version="1.9.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="OpenTracing" Version="0.12.1" />
   </ItemGroup>
 
   <ItemGroup>
