@@ -152,43 +152,21 @@ namespace cartservice
 
                             // Setup LightStep Tracer
                             Console.WriteLine($"Reading Lightstep Access Token {LIGHTSTEP_ACCESS_TOKEN} environment variable");
-                            /*
-                            string serviceName = "cartservice";
-                            string accessToken = Environment.GetEnvironmentVariable(LIGHTSTEP_ACCESS_TOKEN);
-                            string lsHost = Environment.GetEnvironmentVariable(LIGHTSTEP_HOST);
-                            int lsPort = Int32.Parse(Environment.GetEnvironmentVariable(LIGHTSTEP_PORT));
-                            bool plaintext = (Environment.GetEnvironmentVariable(LIGHTSTEP_PLAINTEXT) == "true");
 
-                            var satelliteOptions = new SatelliteOptions(lsHost, lsPort, plaintext);
-                            */
+                            var samplerConfiguration = new Configuration.SamplerConfiguration(loggerFactory)
+                                                    .WithType(ConstSampler.Type)
+                                                    .WithParam(1);
 
-                            var loggerFactory = options.GetRequiredService<ILoggerFactory>(); // get Microsoft.Extensions.Logging ILoggerFactory
-
-                            Configuration config = Configuration.FromEnv();
-
-                            //var reporter = new LoggingReporter(loggerFactory);
-                            //var sampler = new ConstSampler(true);
-                            var tracer = config.GetTracer();
-
-                            // BEGIN 
-                            // Used for GCP Demo
-//                            var overrideTags = new Dictionary<string, object>
-//                            {
-//                              { LightStepConstants.ComponentNameKey, serviceName },
-//                              {"service.version", RedisCartStore.updateUserProfileValue ? RedisCartStore.UnhealthyVersion : RedisCartStore.HealthyVersion},
-//                              {"cartservice.identity", "f738e221f8"},
-//                              {"lightstep.hostname", serviceName + "-0"},
-//                            };
-//                            // END
-//
-//                            var tracerOptions = new Options(accessToken).
-//                                                    WithSatellite(satelliteOptions).
-//                                                    WithTags(overrideTags);
-//                            var lightStepTracer = new LightStep.Tracer(
-//                                    tracerOptions,
-//                                    new LightStepSpanRecorder(),
-//                                    new B3Propagator()
-//                            );
+                            var senderConfiguration = new Configuration.SenderConfiguration(loggerFactory)
+                                                    .WithAgentHost("jaeger")
+                                                    .WithAgentPort(6831);
+                            var reporterConfiguration = new Configuration.ReporterConfiguration(loggerFactory)
+                                                    .WithLogSpans(true)
+                                                    .WithSender(senderConfiguration);
+                            var tracer = (Tracer)new Configuration('cartservice')
+                                                    .WithSampler(samplerConfiguration)
+                                                    .WithReporter(reporterConfiguration)
+                                                    .GetTracer();
 
                             GlobalTracer.Register(tracer);
 
