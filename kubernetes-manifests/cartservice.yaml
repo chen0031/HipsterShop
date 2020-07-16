@@ -16,6 +16,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cartservice
+  namespace: hipster
 spec:
   selector:
     matchLabels:
@@ -39,11 +40,6 @@ spec:
         - name: LISTEN_ADDR
           value: "0.0.0.0"
           # Lightstep config
-        - name: LIGHTSTEP_ACCESS_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: lightstep-credentials
-              key: accessToken
         - name: LIGHTSTEP_HOST
           value: "ingest.lightstep.com"
         - name: LIGHTSTEP_PORT
@@ -79,6 +75,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: cartservice
+  namespace: hipster
 spec:
   type: ClusterIP
   selector:

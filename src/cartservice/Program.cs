@@ -23,7 +23,6 @@ using CartService.Propagation;
 using CommandLine;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
-using LightStep;
 using Microsoft.Extensions.Configuration;
 using OpenTracing.Contrib.Grpc.Interceptors;
 using OpenTracing.Util;
@@ -31,6 +30,7 @@ using Jaeger;
 using Jaeger.Reporters;
 using Jaeger.Samplers;
 using Microsoft.Extensions.Logging;
+
 
 namespace cartservice
 {
@@ -57,6 +57,21 @@ namespace cartservice
             public string Redis { get; set; }
         }
 
+        public static class TracingHelper
+    {
+        public static Tracer InitTracer(string serviceName, ILoggerFactory loggerFactory)
+        {
+            Configuration.SamplerConfiguration samplerConfiguration = new Configuration.SamplerConfiguration(loggerFactory)
+                .WithType(ConstSampler.Type)
+                .WithParam(1);
+            Configuration.ReporterConfiguration reporterConfiguration = new Configuration.ReporterConfiguration(loggerFactory)
+                .WithLogSpans(true);
+            return (Tracer)new Configuration(serviceName, loggerFactory)
+                .WithSampler(samplerConfiguration)
+                .WithReporter(reporterConfiguration)
+                .GetTracer();
+        }
+    }
         static object StartServer(string host, int port, ICartStore cartStore)
         {
             // Run the server in a separate thread and make the main thread busy waiting.
@@ -103,7 +118,6 @@ namespace cartservice
 
             return Task.WaitAny(new[] { serverTask });
         }
-
         static void Main(string[] args)
         {
             if (args.Length == 0)
@@ -152,22 +166,9 @@ namespace cartservice
 
                             // Setup LightStep Tracer
                             Console.WriteLine($"Reading Lightstep Access Token {LIGHTSTEP_ACCESS_TOKEN} environment variable");
-
-                            var samplerConfiguration = new Configuration.SamplerConfiguration(loggerFactory)
-                                                    .WithType(ConstSampler.Type)
-                                                    .WithParam(1);
-
-                            var senderConfiguration = new Configuration.SenderConfiguration(loggerFactory)
-                                                    .WithAgentHost("jaeger")
-                                                    .WithAgentPort(6831);
-                            var reporterConfiguration = new Configuration.ReporterConfiguration(loggerFactory)
-                                                    .WithLogSpans(true)
-                                                    .WithSender(senderConfiguration);
-                            var tracer = (Tracer)new Configuration('cartservice')
-                                                    .WithSampler(samplerConfiguration)
-                                                    .WithReporter(reporterConfiguration)
-                                                    .GetTracer();
-
+                            ILoggerFactory loggerFactory = new LoggerFactory().AddConsole();
+                            var serviceName = "cartserver";
+                            Tracer tracer = TracingHelper.InitTracer(serviceName, loggerFactory);
                             GlobalTracer.Register(tracer);
 
                             // Set redis cache host (hostname+port)

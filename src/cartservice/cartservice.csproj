@@ -21,7 +21,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.2.4" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.0-preview.6.20305.6" />
     <PackageReference Include="OpenTracing" Version="0.12.1" />
     <PackageReference Include="Jaeger.Core" Version="0.4.1" />
     <PackageReference Include="Jaeger.Senders.Thrift" Version="0.4.1" />
