@@ -58,20 +58,27 @@ namespace cartservice
         }
 
         public static class TracingHelper
-    {
-        public static Tracer InitTracer(string serviceName, ILoggerFactory loggerFactory)
         {
-            Configuration.SamplerConfiguration samplerConfiguration = new Configuration.SamplerConfiguration(loggerFactory)
-                .WithType(ConstSampler.Type)
-                .WithParam(1);
-            Configuration.ReporterConfiguration reporterConfiguration = new Configuration.ReporterConfiguration(loggerFactory)
-                .WithLogSpans(true);
-            return (Tracer)new Configuration(serviceName, loggerFactory)
-                .WithSampler(samplerConfiguration)
-                .WithReporter(reporterConfiguration)
-                .GetTracer();
+            public static Tracer InitTracer(string serviceName, ILoggerFactory loggerFactory)
+            {
+                Configuration.SamplerConfiguration samplerConfiguration = new Configuration.SamplerConfiguration(loggerFactory)
+                    .WithType(ConstSampler.Type)
+                    .WithParam(1);
+
+                Configuration.ReporterConfiguration senderConfiguration = new Configuration.SenderConfiguration(loggerFactory)
+                    .WithAgentHost("jaeger")
+                    .WithAgentPort(6831);
+
+                Configuration.ReporterConfiguration reporterConfiguration = new Configuration.ReporterConfiguration(loggerFactory)
+                    .WithLogSpans(true)
+                    .WithSender(senderConfiguration);
+
+                return (Tracer)new Configuration(serviceName, loggerFactory)
+                    .WithSampler(samplerConfiguration)
+                    .WithReporter(reporterConfiguration)
+                    .GetTracer();
+            }
         }
-    }
         static object StartServer(string host, int port, ICartStore cartStore)
         {
             // Run the server in a separate thread and make the main thread busy waiting.
