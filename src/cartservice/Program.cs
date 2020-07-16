@@ -28,6 +28,8 @@ using OpenTracing.Contrib.Grpc.Interceptors;
 using OpenTracing.Util;
 using Jaeger;
 using Jaeger.Reporters;
+using Jaeger.Senders;
+using Jaeger.Senders.Thrift;
 using Jaeger.Samplers;
 using Microsoft.Extensions.Logging;
 
@@ -39,10 +41,6 @@ namespace cartservice
         const string CART_SERVICE_ADDRESS = "LISTEN_ADDR";
         const string REDIS_ADDRESS = "REDIS_ADDR";
         const string CART_SERVICE_PORT = "PORT";
-        const string LIGHTSTEP_ACCESS_TOKEN = "LIGHTSTEP_ACCESS_TOKEN";
-        const string LIGHTSTEP_HOST = "LIGHTSTEP_HOST";
-        const string LIGHTSTEP_PORT = "LIGHTSTEP_PORT";
-        const string LIGHTSTEP_PLAINTEXT = "LIGHTSTEP_PLAINTEXT";
 
         [Verb("start", HelpText = "Starts the server listening on provided port")]
         class ServerOptions
@@ -61,17 +59,21 @@ namespace cartservice
         {
             public static Tracer InitTracer(string serviceName, ILoggerFactory loggerFactory)
             {
+
                 Configuration.SamplerConfiguration samplerConfiguration = new Configuration.SamplerConfiguration(loggerFactory)
                     .WithType(ConstSampler.Type)
                     .WithParam(1);
 
-                Configuration.ReporterConfiguration senderConfiguration = new Configuration.SenderConfiguration(loggerFactory)
-                    .WithAgentHost("jaeger")
-                    .WithAgentPort(6831);
+                Configuration.SenderConfiguration senderConfiguration = new Configuration.SenderConfiguration(loggerFactory)
+                    .WithEndpoint("http://jaeger-collector:14268/api/traces");
+
 
                 Configuration.ReporterConfiguration reporterConfiguration = new Configuration.ReporterConfiguration(loggerFactory)
                     .WithLogSpans(true)
                     .WithSender(senderConfiguration);
+
+                Configuration.SenderConfiguration.DefaultSenderResolver = new SenderResolver(loggerFactory)
+                                                .RegisterSenderFactory<ThriftSenderFactory>();
 
                 return (Tracer)new Configuration(serviceName, loggerFactory)
                     .WithSampler(samplerConfiguration)
@@ -172,7 +174,6 @@ namespace cartservice
                             }
 
                             // Setup LightStep Tracer
-                            Console.WriteLine($"Reading Lightstep Access Token {LIGHTSTEP_ACCESS_TOKEN} environment variable");
                             ILoggerFactory loggerFactory = new LoggerFactory().AddConsole();
                             var serviceName = "cartserver";
                             Tracer tracer = TracingHelper.InitTracer(serviceName, loggerFactory);

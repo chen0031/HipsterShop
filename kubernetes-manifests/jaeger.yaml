@@ -30,6 +30,8 @@ spec:
       - env:
         - name: COLLECTOR_ZIPKIN_HTTP_PORT
           value: "9411"
+        - name: JAEGER_REPORTER_LOG_SPANS
+          value: "true"
         image: jaegertracing/all-in-one
         name: jaeger
         ports:
