@@ -24,11 +24,6 @@ import googleclouddebugger
 import googlecloudprofiler
 from google.auth.exceptions import DefaultCredentialsError
 import grpc
-#from opencensus.trace.exporters import print_exporter
-#from opencensus.trace.exporters import stackdriver_exporter
-#from opencensus.trace.ext.grpc import server_interceptor
-#from opencensus.common.transports.async_ import AsyncTransport
-#from opencensus.trace.samplers import always_on
 
 from opencensus.ext.grpc import server_interceptor
 from opencensus.trace import samplers
@@ -36,39 +31,42 @@ from opencensus.ext.zipkin.trace_exporter import ZipkinExporter
 
 from opencensus.ext.jaeger.trace_exporter import JaegerExporter
 
-
 import demo_pb2
 import demo_pb2_grpc
 from grpc_health.v1 import health_pb2
 from grpc_health.v1 import health_pb2_grpc
 
 from logger import getJSONLogger
+
 logger = getJSONLogger('recommendationservice-server')
 
-def initStackdriverProfiling():
-  project_id = None
-  try:
-    project_id = os.environ["GCP_PROJECT_ID"]
-  except KeyError:
-    # Environment variable not set
-    pass
 
-  for retry in xrange(1,4):
+def initStackdriverProfiling():
+    project_id = None
     try:
-      if project_id:
-        googlecloudprofiler.start(service='recommendation_server', service_version='1.0.0', verbose=0, project_id=project_id)
-      else:
-        googlecloudprofiler.start(service='recommendation_server', service_version='1.0.0', verbose=0)
-      logger.info("Successfully started Stackdriver Profiler.")
-      return
-    except (BaseException) as exc:
-      logger.info("Unable to start Stackdriver Profiler Python agent. " + str(exc))
-      if (retry < 4):
-        logger.info("Sleeping %d seconds to retry Stackdriver Profiler agent initialization"%(retry*10))
-        time.sleep (1)
-      else:
-        logger.warning("Could not initialize Stackdriver Profiler after retrying, giving up")
-  return
+        project_id = os.environ["GCP_PROJECT_ID"]
+    except KeyError:
+        # Environment variable not set
+        pass
+
+    for retry in xrange(1, 4):
+        try:
+            if project_id:
+                googlecloudprofiler.start(service='recommendation_server', service_version='1.0.0', verbose=0,
+                                          project_id=project_id)
+            else:
+                googlecloudprofiler.start(service='recommendation_server', service_version='1.0.0', verbose=0)
+            logger.info("Successfully started Stackdriver Profiler.")
+            return
+        except (BaseException) as exc:
+            logger.info("Unable to start Stackdriver Profiler Python agent. " + str(exc))
+            if (retry < 4):
+                logger.info("Sleeping %d seconds to retry Stackdriver Profiler agent initialization" % (retry * 10))
+                time.sleep(1)
+            else:
+                logger.warning("Could not initialize Stackdriver Profiler after retrying, giving up")
+    return
+
 
 class RecommendationService(demo_pb2_grpc.RecommendationServiceServicer):
     def ListRecommendations(self, request, context):
@@ -76,7 +74,7 @@ class RecommendationService(demo_pb2_grpc.RecommendationServiceServicer):
         # fetch list of products from product catalog stub
         cat_response = product_catalog_stub.ListProducts(demo_pb2.Empty())
         product_ids = [x.id for x in cat_response.products]
-        filtered_products = list(set(product_ids)-set(request.product_ids))
+        filtered_products = list(set(product_ids) - set(request.product_ids))
         num_products = len(filtered_products)
         num_return = min(max_responses, num_products)
         # sample list of indicies to return
@@ -97,60 +95,16 @@ class RecommendationService(demo_pb2_grpc.RecommendationServiceServicer):
 if __name__ == "__main__":
     logger.info("initializing recommendationservice")
 
-    #try:
-    #  if "DISABLE_PROFILER" in os.environ:
-    #    raise KeyError()
-    #  else:
-    #    logger.info("Profiler enabled.")
-    #    initStackdriverProfiling()
-    #except KeyError:
-    #    logger.info("Profiler disabled.")
-
-    #try:
-    #  if "DISABLE_TRACING" in os.environ:
-    #    raise KeyError()
-    #  else:
-    #    logger.info("Tracing enabled.")
-    #    sampler = always_on.AlwaysOnSampler()
-    #    exporter = stackdriver_exporter.StackdriverExporter(
-    #      project_id=os.environ.get('GCP_PROJECT_ID'),
-    #      transport=AsyncTransport)
-    #    tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(sampler, exporter)
-    #except (KeyError, DefaultCredentialsError):
-    #    logger.info("Tracing disabled.")
-    #    tracer_interceptor = server_interceptor.OpenCensusServerInterceptor()
-
-
-    #try:
-    #  if "DISABLE_DEBUGGER" in os.environ:
-    #    raise KeyError()
-    #  else:
-    #    logger.info("Debugger enabled.")
-    #    try:
-    #      googleclouddebugger.enable(
-    #          module='recommendationserver',
-    #          version='1.0.0'
-    #      )
-    #    except Exception, err:
-    #        logger.error("Could not enable debugger")
-    #        logger.error(traceback.print_exc())
-    #        pass
-    #except KeyError:
-    #    logger.info("Debugger disabled.")
     sampler = samplers.AlwaysOnSampler()
     exporter = ZipkinExporter(
-         service_name='recommendationservice',
-         host_name=os.environ.get('JAEGER_HOST', 'jaeger-collector'),
-         port=int(os.environ.get('ZIPKIN_PORT', '9411'))
-     )
-    #exporter = JaegerExporter(
-    #    service_name="recommendationservice",
-    #    host_name=os.environ.get('JAEGER_AGENT_HOST', 'jaeger'),
-    #    agent_port=int(os.environ.get('JAEGER_AGENT_PORT', 6831)),
-    #)
+        service_name='recommendationservice',
+        host_name=os.environ.get('JAEGER_HOST', 'jaeger-collector'),
+        port=int(os.environ.get('ZIPKIN_PORT', '9411'))
+    )
+
     logger.info(exporter)
     tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(
-            sampler, exporter)
+        sampler, exporter)
     logger.info("Tracing enable!")
 
     port = os.environ.get('PORT', "8080")
@@ -163,7 +117,7 @@ if __name__ == "__main__":
 
     # create gRPC server
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10),
-                      interceptors=(tracer_interceptor,))
+                         interceptors=(tracer_interceptor,))
 
     # add class to gRPC server
     service = RecommendationService()
@@ -172,13 +126,12 @@ if __name__ == "__main__":
 
     # start server
     logger.info("listening on port: " + port)
-    server.add_insecure_port('[::]:'+port)
+    server.add_insecure_port('[::]:' + port)
     server.start()
 
     # keep alive
     try:
-         while True:
+        while True:
             time.sleep(10000)
     except KeyboardInterrupt:
-            server.stop(0)
-
+        server.stop(0)

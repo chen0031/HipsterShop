@@ -65,7 +65,7 @@ namespace cartservice
                     .WithParam(1);
 
                 Configuration.SenderConfiguration senderConfiguration = new Configuration.SenderConfiguration(loggerFactory)
-                    .WithEndpoint("http://jaeger-collector:14268/api/traces");
+                    .WithEndpoint(Environment.GetEnvironmentVariable(JAEGER_ENDPOINT));
 
 
                 Configuration.ReporterConfiguration reporterConfiguration = new Configuration.ReporterConfiguration(loggerFactory)

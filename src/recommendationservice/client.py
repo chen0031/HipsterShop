@@ -36,10 +36,6 @@ if __name__ == "__main__":
         port = "8080"
 
     try:
-        #exporter = JaegerExporter(
-        #    service_name="recommendationservice",
-        #    host_name=os.environ.get('JAEGER_AGENT_HOST', 'jaeger'),
-        #    agent_port=int(os.environ.get('JAEGER_AGENT_PORT', '6831')),)
         exporter = ZipkinExporter(
             service_name='recommendationservice',
             host_name=os.environ.get('JAEGER_HOST', 'jaeger-collector'),
