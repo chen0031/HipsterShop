@@ -41,7 +41,7 @@ namespace cartservice
         const string CART_SERVICE_ADDRESS = "LISTEN_ADDR";
         const string REDIS_ADDRESS = "REDIS_ADDR";
         const string CART_SERVICE_PORT = "PORT";
-
+	const string JAEGER_ENDPOINT = "JAEGER_ENDPOINT";
         [Verb("start", HelpText = "Starts the server listening on provided port")]
         class ServerOptions
         {
